@@ -1,41 +1,61 @@
 import '../styles/Navbar.css'
-function Navbar(){
-    return <nav className="navbar navbar-expand-lg bg-dark">
-    <div className="container-fluid">
-      <a className="navbar-brand text-light" href="#">Reader's Buffet</a>
-      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-          <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">Link</a>
-          </li>
-          <li className="nav-item dropdown">
-            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a className="dropdown-item" href="#">Action</a></li>
-              <li><a className="dropdown-item" href="#">Another action</a></li>
-              <li><hr className="dropdown-divider"/></li>
-              <li><a className="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link disabled">Disabled</a>
-          </li>
-        </ul>
-        <form className="d-flex" role="search">
-          <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-          <button className="btn btn-outline-success" type="submit">Search</button>
-          {/* Comment by Asbin Khanal */}
-        </form>
-      </div>
-    </div>
-  </nav>
+import React from 'react'
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { LinkContainer } from 'react-router-bootstrap';
+
+function Appbar(){
+    return <Navbar bg="light" expand="lg" sticky='top'>
+    <Container fluid>
+      <LinkContainer to="/">
+        <Navbar.Brand>Reader's Buffet</Navbar.Brand>
+        </LinkContainer>
+      <Navbar.Toggle aria-controls="navbarScroll" />
+      <Navbar.Collapse id="navbarScroll">
+        <Nav
+          className="me-auto my-2 my-lg-0"
+          style={{ maxHeight: '100px' }}
+          navbarScroll
+        >
+          <LinkContainer to="/">
+          <Navbar.Text className="me-2">Home</Navbar.Text>
+          </LinkContainer>
+          <LinkContainer to="/about">
+          <Navbar.Text className="me-2">About</Navbar.Text>
+          </LinkContainer>
+          <LinkContainer to="/contact">
+          <Navbar.Text className="me-2">Contact</Navbar.Text>
+          </LinkContainer>
+          <LinkContainer to="/blog">
+          <Navbar.Text>Blog</Navbar.Text>
+          </LinkContainer>
+          <NavDropdown title="All Books" id="navbarScrollingDropdown">
+            <LinkContainer to="/buy">
+            <NavDropdown.Item href="#action3">Buy</NavDropdown.Item>
+            </LinkContainer>
+            <LinkContainer to="/exchange">
+            <NavDropdown.Item href="#action4">
+              Exchange
+            </NavDropdown.Item>
+            </LinkContainer>
+            
+          </NavDropdown>
+        </Nav>
+        <Form className="d-flex">
+          <Form.Control
+            type="search"
+            placeholder="Search"
+            className="me-2"
+            aria-label="Search"
+          />
+          <Button variant="outline-success">Search</Button>
+        </Form>
+      </Navbar.Collapse>
+    </Container>
+  </Navbar>
 }
-export default Navbar
+export default Appbar
