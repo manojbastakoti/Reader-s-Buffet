@@ -11,6 +11,8 @@ import Buy from "./components/Buy";
 import Exchange from "./components/Exchange";
 import Contact from "./components/Contact";
 import Homepage from "./components/Homepage";
+import Footer from "./components/Footer";
+
 
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
 
 
       </Routes>
+      <Footer/>
      </BrowserRouter>
     </div>
   );

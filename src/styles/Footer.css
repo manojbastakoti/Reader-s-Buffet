@@ -1,0 +1,12 @@
+.FooterSection{
+    background-color:aquamarine;
+}
+
+.FooterSection .btn{
+    position: relative;
+    margin: 10px;
+}
+.FooterSection .column {
+    float: left;
+    width: 33.33%;
+  }
