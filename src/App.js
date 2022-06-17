@@ -1,6 +1,8 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
-import ProductCard from "./components/Card";
+// import Carousel from "./components/Carousel";
+import "./styles/Carousel.css"
+// import ProductCard from "./components/Card";
 import React from "react";
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 import About from "./components/About";
