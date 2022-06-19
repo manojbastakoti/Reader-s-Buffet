@@ -6,7 +6,7 @@ export default function Homepage() {
   return (
     <>
     <div><Carousel/></div>
-    <div><h1 style= {{color:'red'}}>Put your cards here</h1> </div>
+    <div className="container"><h1 style= {{color:'red'}}>Put your cards here</h1> </div>
     </>
   )
 }
