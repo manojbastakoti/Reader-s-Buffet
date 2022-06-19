@@ -1,0 +1,28 @@
+.FooterSection {
+    background-color:aquamarine;
+    width: 100%;
+    overflow: hidden;
+}
+.row{
+    justify-content: center;
+}
+
+.col {
+    margin: 10px;
+    /* background-color: red; */
+}
+
+.FooterSection .NavIcons{
+    margin-top: 20px;
+}
+
+.FooterSection img {
+    height: 50px;
+    width: 50px;
+
+}
+
+.FooterSection .btn {
+    position: relative;
+    margin: 10px;
+}

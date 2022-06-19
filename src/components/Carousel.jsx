@@ -6,7 +6,7 @@ export default function MyCarousel() {
   return (
     <div><Carousel fade>
     <Carousel.Item text-center>
-      <img
+      <img 
         className="d-block w-100"
         src="./assets/Carousel01.jpg"
         alt="First slide"
@@ -17,7 +17,7 @@ export default function MyCarousel() {
       </Carousel.Caption>
     </Carousel.Item>
     <Carousel.Item>
-      <img
+      <img 
         className="d-block w-100"
         src="./assets/Carousel02.jpg"
         alt="Second slide"
@@ -29,7 +29,7 @@ export default function MyCarousel() {
       </Carousel.Caption>
     </Carousel.Item>
     <Carousel.Item>
-      <img
+      <img 
         className="d-block w-100"
         src="./assets/Carousel03.jpg"
         alt="Third slide"

@@ -7,6 +7,7 @@ export default function Homepage() {
   return (
     <>
     <div><Carousel/></div>
+
     <div className="d-flex flex-wrap gap-3 justify-content-center mt-5">
                 <ProductCard title="Harry Potter" price="Rs.450"img="assets/harry.webp"/>
 
@@ -27,6 +28,7 @@ export default function Homepage() {
 
 
                 </div>
+
 
 
     </>
