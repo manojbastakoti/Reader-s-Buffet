@@ -1,8 +1,22 @@
 .card{
-  
-    max-width:20rem; 
-    min-width:10rem;
-    /* border-radius: 0.75rem !important; */
+  height:400px;
+  width:20rem;
+}
+.card-body{
+    height:150px;
+    flex:none !important;
+
+}
+.img-cont{
+    flex:1;
+    overflow:hidden;
+    height:350px;
+    display:flex;
+    justify-content:center;
+}
+.img-cont img {
+    height:100%;
+    object-fit:contain;
 }
 #product{
     border-radius: 0.75rem ;
