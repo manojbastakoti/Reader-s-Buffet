@@ -1,28 +1,39 @@
 .FooterSection {
-    background-color:aquamarine;
+    background-color: beige;
     width: 100%;
     overflow: hidden;
+    padding: 10px;
 }
-.row{
+
+.row {
     justify-content: center;
+
+}
+
+.NavIcons {
+    justify-items: center;
 }
 
 .col {
     margin: 10px;
-    /* background-color: red; */
 }
 
-.FooterSection .NavIcons{
-    margin-top: 20px;
+.FooterBrand {
+    align-items: center;
 }
 
 .FooterSection img {
-    height: 50px;
-    width: 50px;
+
+    background-color: transparent;
 
 }
 
 .FooterSection .btn {
     position: relative;
     margin: 10px;
+}
+
+.nav {
+    max-width: fit-content;
+    justify-content: center;
 }
