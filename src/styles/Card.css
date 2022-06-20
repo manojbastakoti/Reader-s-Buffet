@@ -5,6 +5,9 @@
 .card-body{
     height:150px;
     flex:none !important;
+    background-color:#f3f3ed !important;
+    margin-top:5px;
+
 
 }
 .img-cont{
