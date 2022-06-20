@@ -54,6 +54,7 @@ function Appbar(){
           />
           <Button variant="outline-success">Search</Button>
         </Form>
+        <Button href="/contact" variant="outline-success">Search</Button>
       </Navbar.Collapse>
     </Container>
   </Navbar>

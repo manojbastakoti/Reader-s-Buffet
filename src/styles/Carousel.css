@@ -1,12 +1,9 @@
 .carousel {
-    background-color: black;   
+    background-color: black;
 }
-.carousel img{
+
+.carousel img {
     opacity: 0.5;
-    width: 100%;
-    
+    min-height: 300px;
+
 }
-/* .carousel-caption {
-    top: 100px;
-    bottom: auto;
-} */
