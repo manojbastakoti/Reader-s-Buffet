@@ -62,7 +62,7 @@ function Appbar() {
          
         </Form>
 
-        <LinkContainer  to="/contact">
+        <LinkContainer  to="/login">
           <Navbar.Text className="mx-5">Login</Navbar.Text>
         </LinkContainer>
       </Navbar.Collapse>

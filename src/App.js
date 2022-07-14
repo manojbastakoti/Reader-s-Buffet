@@ -12,6 +12,9 @@ import Exchange from "./components/Exchange";
 import Contact from "./components/Contact";
 import Homepage from "./components/Homepage";
 import Footer from "./components/Footer";
+import Login from "./components/Login";
+import Register from "./components/Register";
+// import Example from "./components/Example";
 
 
 
@@ -28,6 +31,9 @@ function App() {
         <Route path="/buy" element={<Buy/>}/>
         <Route path="/exchange" element={<Exchange/>}/>
         <Route path="/contact" element={<Contact/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
+        {/* <Route path="/example" element={<Example/>}/> */}
 
 
       </Routes>
