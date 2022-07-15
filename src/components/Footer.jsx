@@ -47,8 +47,8 @@ export default function Footer() {
                         <h3>Help</h3>
                         <Nav defaultActiveKey="/" className="flex-column">
 
-                            <Nav.Link href="/" eventKey="link-1"> Sign In</Nav.Link>
-                            <Nav.Link href="/" eventKey="link-2">Sign Up</Nav.Link>
+                            <Nav.Link href="/login" eventKey="link-1"> Sign In</Nav.Link>
+                            <Nav.Link href="/register" eventKey="link-2">Sign Up</Nav.Link>
                             <Nav.Link href="/contact" eventKey="link-2"> Contact</Nav.Link>
 
 
@@ -66,7 +66,7 @@ export default function Footer() {
                     </Nav>
                 </Row>
                 <hr />
-                <Row text-center>© Reader's Buffet, 2022. All Rights Reserved.</Row>
+                <Row>© Reader's Buffet, 2022. All Rights Reserved.</Row>
             </div>
         </>
     )

@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+.register-container h1 {
+    font-family: 'Pacifico', cursive;
+    text-align: center;
+    padding: 50px 0;
+}
+
+
+.register-container{
+  background-color:bisque;
+  border: 2px solid grey;
+  border-radius: 5px;
+  justify-content: center;
+  justify-items: center;
+}
+
+.register-container h5 {
+  overflow: hidden;
+  font-family: 'Pacifico', cursive;
+  text-align: center;
+}
+
+.nav-link{
+  text-align: center;
+}
+
+.error {
+  border: 2px solid #FF6565;
+}
+
+.error-message {
+  color: #FF6565;
+  padding: .5em .2em;
+  height: 1em;
+  position: absolute;
+  font-size: .8em;
+}
