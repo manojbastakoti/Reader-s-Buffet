@@ -12,12 +12,10 @@ import Exchange from "./components/Exchange";
 import Contact from "./components/Contact";
 import Homepage from "./components/Homepage";
 import Footer from "./components/Footer";
-import ReactDOM from 'react-dom'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import Login from "./components/Login";
+import Register from "./components/Register";
+// import Example from "./components/Example";
 
-library.add(fab,faCheckSquare,faCoffee)
 
 
 function App() {
@@ -33,6 +31,9 @@ function App() {
         <Route path="/buy" element={<Buy/>}/>
         <Route path="/exchange" element={<Exchange/>}/>
         <Route path="/contact" element={<Contact/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
+        {/* <Route path="/example" element={<Example/>}/> */}
 
 
       </Routes>
