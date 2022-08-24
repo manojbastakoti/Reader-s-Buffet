@@ -8,6 +8,8 @@ import Nav from "react-bootstrap/Nav";
 import * as Icon from "react-bootstrap-icons";
 import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
 
 const nameRegExp =
   /(^[A-Za-z]{2,16})([ ]{0,1})([A-Za-z]{2,16})?([ ]{0,1})?([A-Za-z]{2,16})?([ ]{0,1})?([A-Za-z]{2,16})/;
@@ -61,11 +63,35 @@ const schema = Yup.object().shape({
 });
 
 export default function Register() {
+  const { mutate, isLoading } = useMutation(
+    async (values) => axios.post("/user/register", values),
+    {
+      onSuccess: (data) => {
+        console.log(data);
+        // toast.success(data.message);
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          console.log(error.response.data);
+          // toast.error(error.response.data.message);
+        } else {
+          console.log(error);
+        }
+      },
+    }
+  );
+
+  const handleSubmit = (values) => {
+    delete values.terms;
+    delete values.password2;
+    mutate(values);
+  };
+
   return (
     <>
       <Formik
         validationSchema={schema}
-        onSubmit={console.log}
+        onSubmit={handleSubmit}
         initialValues={{
           fullName: "",
           email: "",
@@ -234,7 +260,7 @@ export default function Register() {
                     <Button
                       variant="primary"
                       type="submit"
-                      disabled={!isValid || isSubmitting}
+                      disabled={!isValid || isLoading}
                     >
                       Register me
                     </Button>
