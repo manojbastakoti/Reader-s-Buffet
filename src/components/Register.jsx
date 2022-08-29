@@ -12,6 +12,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 
 const nameRegExp =
   /(^[A-Za-z]{2,16})([ ]{0,1})([A-Za-z]{2,16})?([ ]{0,1})?([A-Za-z]{2,16})?([ ]{0,1})?([A-Za-z]{2,16})/;
@@ -297,9 +298,9 @@ export default function Register() {
 
                 <Row>
                   Already have an account?{" "}
-                  <Nav.Link href="/example" eventKey="link-1">
-                    Sign In
-                  </Nav.Link>
+                  <LinkContainer to="/login">
+                    <Nav.Link eventKey="link-1">Sign In</Nav.Link>
+                  </LinkContainer>
                 </Row>
               </Col>
             </Row>
