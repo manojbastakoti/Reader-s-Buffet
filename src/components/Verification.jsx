@@ -1,23 +1,56 @@
-import React, { useEffect } from "react";
+import { useMutation } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import useQuery from "../hooks/useQuery";
 
 export default function Verification() {
   const query = useQuery();
   const navigate = useNavigate();
+  const [otp, setOtp] = useState("");
 
+  const { mutate } = useMutation(
+    (values) => axios.post(`/user/verify`, values),
+    {
+      onSuccess: (data) => {
+        if (data.status === 200 || data.status === 201) {
+          toast.success(data.data.message);
+          navigate("/login");
+        }
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          console.log(error.response.data);
+          toast.error(error?.response?.data?.message);
+        } else {
+          console.log(error);
+        }
+      },
+    }
+  );
+
+  const resendOTP = async () => {
+    await axios.get(`/user/resend-verification-otp/${query.get("email")}`);
+    toast.success("OTP has been sent to your email");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    mutate({ otp, email: query.get("email") });
+  };
   useEffect(() => {
-    // if (!query.get("email")) {
-    //   navigate("/login");
-    //   return;
-    // }
+    if (!query.get("email")) {
+      navigate("/login");
+      return;
+    }
   }, []);
 
   return (
     <Container>
       <Card className="mx-auto p-3 my-4">
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Text>
             <h1 className="text-center">Verification</h1>
             <p>
@@ -32,6 +65,8 @@ export default function Verification() {
                 maxLength={6}
                 placeholder="Enter code"
                 autoFocus
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
               />
             </Form.Group>
             <Button className="w-100" type="submit">
@@ -46,6 +81,7 @@ export default function Verification() {
               size="sm"
               className="w-100"
               type="button"
+              onClick={resendOTP}
             >
               Resend
             </Button>
