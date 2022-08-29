@@ -10,6 +10,8 @@ import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const nameRegExp =
   /(^[A-Za-z]{2,16})([ ]{0,1})([A-Za-z]{2,16})?([ ]{0,1})?([A-Za-z]{2,16})?([ ]{0,1})?([A-Za-z]{2,16})/;
@@ -48,32 +50,31 @@ const schema = Yup.object().shape({
       "*Must contain at least one uppercase letter, one lowercase letter, one number and one special character"
     )
     .required("*Password required"),
-  password2: Yup.string()
-    .required("*This field cannot be empty")
-    .when("password", {
-      is: (val) => (val && val.length > 0 ? true : false),
-      then: Yup.string().oneOf(
-        [Yup.ref("password")],
-        "Both password need to be the same"
-      ),
-    }),
+  password2: Yup.string().oneOf(
+    [Yup.ref("password"), null],
+    "Both passwords do not match."
+  ),
   dob: Yup.date().required("*Please provide your date of birth"),
   // .min("13-07-2022", "Date is too early"),
   terms: Yup.bool().required().oneOf([true], "Terms must be accepted"),
 });
 
 export default function Register() {
+  const navigate = useNavigate();
   const { mutate, isLoading } = useMutation(
     async (values) => axios.post("/user/register", values),
     {
       onSuccess: (data) => {
-        console.log(data);
-        // toast.success(data.message);
+        if (data.status === 200 || data.status === 201) {
+          console.log(data.data);
+          toast.success(data.data.message);
+          navigate("/login");
+        }
       },
       onError: (error) => {
         if (error instanceof AxiosError) {
           console.log(error.response.data);
-          // toast.error(error.response.data.message);
+          toast.error(error?.response?.data?.message);
         } else {
           console.log(error);
         }
@@ -81,10 +82,11 @@ export default function Register() {
     }
   );
 
-  const handleSubmit = (values) => {
-    delete values.terms;
-    delete values.password2;
-    mutate(values);
+  const handleSubmit = async (values, { setSubmitting }) => {
+    let v = Object.assign({}, values);
+    delete v.terms;
+    delete v.password2;
+    mutate(v);
   };
 
   return (
@@ -112,6 +114,7 @@ export default function Register() {
           isValid,
           errors,
           isSubmitting,
+          setSubmitting,
         }) => (
           <div>
             <Row>
@@ -262,7 +265,7 @@ export default function Register() {
                       type="submit"
                       disabled={!isValid || isLoading}
                     >
-                      Register me
+                      {isLoading ? "Registering..." : "Register me"}
                     </Button>
                   </div>
 
