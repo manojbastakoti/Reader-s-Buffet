@@ -14,6 +14,7 @@ import Homepage from "./components/Homepage";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Verification from "./components/Verification";
 
 // import Example from "./components/Example";
 
@@ -31,6 +32,8 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/verification" element={<Verification />} />
+
           {/* <Route path="/example" element={<Example/>}/> */}
         </Routes>
         <Footer />
