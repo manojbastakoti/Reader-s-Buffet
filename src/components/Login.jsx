@@ -5,21 +5,56 @@ import "../styles/Login.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
-
 import * as Icon from "react-bootstrap-icons";
 import { LinkContainer } from "react-router-bootstrap";
-
+import { useMutation } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 export default function Login() {
   const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
+  const [credentials, setCredentials] = useState({
+    user: "",
+    password: "",
+  });
+
+  const { mutate, isLoading } = useMutation(
+    (values) => axios.post("/user/login", values),
+    {
+      onSuccess: (data) => {
+        if (data.status === 200 || data.status === 201) {
+          console.log(data.data);
+          toast.success(data.data.message);
+          Cookies.set("token", data.data.data.token);
+          navigate("/");
+        }
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          console.log(error.response.data);
+          toast.error(error?.response?.data?.message);
+        } else {
+          console.log(error);
+        }
+      },
+    }
+  );
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setCredentials({ ...credentials, [name]: value });
+  };
 
   const handleSubmit = (event) => {
+    event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
     }
-
     setValidated(true);
+    mutate(credentials);
   };
 
   return (
@@ -34,6 +69,9 @@ export default function Login() {
                   required
                   type="text"
                   placeholder="Enter username or email"
+                  name="user"
+                  onChange={handleChange}
+                  value={credentials.user}
                 />
                 <Form.Control.Feedback type="invalid">
                   Please enter your Username or email address
@@ -41,13 +79,20 @@ export default function Login() {
               </Form.Group>
 
               <Form.Group className="m-3" controlId="formBasicPassword">
-                <Form.Control required type="password" placeholder="Password" />
+                <Form.Control
+                  required
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  onChange={handleChange}
+                  value={credentials.password}
+                />
                 <Form.Control.Feedback type="invalid">
                   Please enter your password.
                 </Form.Control.Feedback>
               </Form.Group>
               <div className="d-grid m-3">
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" disabled={isLoading}>
                   Login
                 </Button>
               </div>
