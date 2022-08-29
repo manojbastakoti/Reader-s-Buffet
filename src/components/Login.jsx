@@ -52,10 +52,9 @@ export default function Login() {
                 </Button>
               </div>
 
-              <Nav.Link href="/login" eventKey="link-1">
-                {" "}
-                Forgot password?
-              </Nav.Link>
+              <LinkContainer to="/password-reset">
+                <Nav.Link eventKey="link-1"> Forgot password?</Nav.Link>
+              </LinkContainer>
             </Form>
             <hr />
 

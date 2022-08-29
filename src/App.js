@@ -15,6 +15,7 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Verification from "./components/Verification";
+import PasswordReset from "./components/PasswordReset";
 
 // import Example from "./components/Example";
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/verification" element={<Verification />} />
+          <Route path="/password-reset" element={<PasswordReset />} />
 
           {/* <Route path="/example" element={<Example/>}/> */}
         </Routes>
