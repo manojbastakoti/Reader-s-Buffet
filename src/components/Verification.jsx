@@ -8,10 +8,10 @@ export default function Verification() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!query.get("email")) {
-      navigate("/login");
-      return;
-    }
+    // if (!query.get("email")) {
+    //   navigate("/login");
+    //   return;
+    // }
   }, []);
 
   return (

@@ -68,7 +68,8 @@ export default function Register() {
         if (data.status === 200 || data.status === 201) {
           console.log(data.data);
           toast.success(data.data.message);
-          navigate("/login");
+          console.log(data.data.data);
+          navigate(`/verification?email=${data?.data?.data?.email}`);
         }
       },
       onError: (error) => {
