@@ -11,10 +11,12 @@ import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/slices/authSlice";
 export default function Login() {
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [credentials, setCredentials] = useState({
     user: "",
     password: "",
@@ -27,7 +29,7 @@ export default function Login() {
         if (data.status === 200 || data.status === 201) {
           console.log(data.data);
           toast.success(data.data.message);
-          Cookies.set("token", data.data.data.token);
+          dispatch(login(data.data.data.token));
           navigate("/");
         }
       },

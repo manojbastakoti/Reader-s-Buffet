@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const authSlice = createSlice({
   name: "auth",
@@ -10,11 +12,19 @@ const authSlice = createSlice({
   },
   reducers: {
     login: (state, action) => {
-      state.loading = true;
-      state.error = null;
+      Cookies.set("token", action.payload);
+      state.isAuthenticated = true;
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${action.payload}`;
+    },
+    logout: (state) => {
+      Cookies.remove("token");
+      state.isAuthenticated = false;
+      axios.defaults.headers.common["Authorization"] = null;
     },
   },
 });
 
-export const { login } = authSlice.actions;
+export const { login, logout } = authSlice.actions;
 export default authSlice.reducer;
