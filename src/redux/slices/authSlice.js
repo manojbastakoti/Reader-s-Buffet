@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    isAuthenticated: false,
+    isAuthenticated: Cookies.get("token") ? true : false,
     user: null,
     error: null,
     loading: false,
@@ -22,6 +22,7 @@ const authSlice = createSlice({
       Cookies.remove("token");
       state.isAuthenticated = false;
       axios.defaults.headers.common["Authorization"] = null;
+      window.location.href = "/";
     },
   },
 });
