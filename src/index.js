@@ -17,7 +17,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <ToastContainer position="bottom-left" limit={4} />
+        <ToastContainer position="bottom-left" limit={4} autoClose={3000} />
         <App />
       </QueryClientProvider>
     </Provider>

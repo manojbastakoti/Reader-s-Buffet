@@ -21,21 +21,23 @@ export default function Login() {
     user: "",
     password: "",
   });
-  const toastRef = useRef(null);
 
   const { mutate, isLoading } = useMutation(
     (values) => axios.post("/user/login", values),
     {
       onMutate: () => {
-        toastRef.current = toast.loading("Logging in...");
+        toast.loading("Logging in...", {
+          toastId: "loginToastId",
+        });
       },
       onSuccess: (data) => {
         if (data.status === 200 || data.status === 201) {
           console.log(data.data);
-          toast.update(toastRef.current, {
+          toast.update("loginToastId", {
             render: data.data.message,
             type: "success",
             isLoading: false,
+            autoClose: true,
           });
           dispatch(login(data.data.data.token));
           navigate("/");
@@ -44,10 +46,11 @@ export default function Login() {
       onError: (error) => {
         if (error instanceof AxiosError) {
           console.log(error.response.data);
-          toast.update(toastRef.current, {
+          toast.update("loginToastId", {
             render: error?.response?.data?.message,
             type: "error",
             isLoading: false,
+            autoClose: true,
           });
         } else {
           console.log(error);
