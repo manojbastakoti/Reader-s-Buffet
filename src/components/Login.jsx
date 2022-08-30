@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "../styles/Login.css";
@@ -21,14 +21,22 @@ export default function Login() {
     user: "",
     password: "",
   });
+  const toastRef = useRef(null);
 
   const { mutate, isLoading } = useMutation(
     (values) => axios.post("/user/login", values),
     {
+      onMutate: () => {
+        toastRef.current = toast.loading("Logging in...");
+      },
       onSuccess: (data) => {
         if (data.status === 200 || data.status === 201) {
           console.log(data.data);
-          toast.success(data.data.message);
+          toast.update(toastRef.current, {
+            render: data.data.message,
+            type: "success",
+            isLoading: false,
+          });
           dispatch(login(data.data.data.token));
           navigate("/");
         }
@@ -36,7 +44,11 @@ export default function Login() {
       onError: (error) => {
         if (error instanceof AxiosError) {
           console.log(error.response.data);
-          toast.error(error?.response?.data?.message);
+          toast.update(toastRef.current, {
+            render: error?.response?.data?.message,
+            type: "error",
+            isLoading: false,
+          });
         } else {
           console.log(error);
         }
