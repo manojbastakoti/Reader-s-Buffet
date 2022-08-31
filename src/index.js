@@ -9,7 +9,11 @@ import { ToastContainer } from "react-toastify";
 import { store } from "./redux/store";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
+import Cookies from "js-cookie";
 axios.defaults.baseURL = process.env.REACT_APP_BASE_API;
+axios.defaults.headers.common["Authorization"] = `Bearer ${Cookies.get(
+  "token"
+)}`;
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

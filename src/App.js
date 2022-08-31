@@ -16,6 +16,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Verification from "./components/Verification";
 import PasswordReset from "./components/PasswordReset";
+import Profile from "./components/Profile";
 
 // import Example from "./components/Example";
 
@@ -26,6 +27,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/buy" element={<Buy />} />

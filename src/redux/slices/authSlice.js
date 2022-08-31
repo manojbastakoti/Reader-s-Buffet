@@ -21,11 +21,15 @@ const authSlice = createSlice({
     logout: (state) => {
       Cookies.remove("token");
       state.isAuthenticated = false;
+      state.user = null;
       axios.defaults.headers.common["Authorization"] = null;
       window.location.href = "/";
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, setUser } = authSlice.actions;
 export default authSlice.reducer;
