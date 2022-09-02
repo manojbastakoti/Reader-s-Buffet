@@ -17,8 +17,7 @@ import Register from "./components/Register";
 import Verification from "./components/Verification";
 import PasswordReset from "./components/PasswordReset";
 import Profile from "./components/Profile";
-
-// import Example from "./components/Example";
+import AddBook from "./components/AddBook";
 
 function App() {
   return (
@@ -37,6 +36,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/verification" element={<Verification />} />
           <Route path="/password-reset" element={<PasswordReset />} />
+          <Route path="/add-book" element={<AddBook />} />
 
           {/* <Route path="/example" element={<Example/>}/> */}
         </Routes>

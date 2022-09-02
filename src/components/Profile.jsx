@@ -3,6 +3,7 @@ import axios from "axios";
 import React from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import { LinkContainer } from "react-router-bootstrap";
 import { setUser } from "../redux/slices/authSlice";
 import ProductCard from "./Card";
 
@@ -45,7 +46,9 @@ export default function Profile() {
           <Card className="shadow-sm p-3 w-100 h-auto">
             <div className="d-flex justify-content-between  align-items-center mb-3">
               <h4>My Books</h4>
-              <Button variant="primary">Add Book</Button>
+              <LinkContainer to="/add-book">
+                <Button variant="primary">Add Book</Button>
+              </LinkContainer>
             </div>
             <h6>
               Books listed here are visible and available to anyone for
