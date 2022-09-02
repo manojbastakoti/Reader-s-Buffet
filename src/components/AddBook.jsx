@@ -1,8 +1,27 @@
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import React from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 export default function AddBook() {
+  const {
+    data: genre,
+    isLoading,
+    isError,
+  } = useQuery(["genre"], async () => axios.get("/genre"), {
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  if (isLoading) return <h2>Loading...</h2>;
+  if (isError) return <h2>Something went wrong. Try reloading the page </h2>;
+
+  console.log(genre);
   return (
     <Container className="py-3">
       <Card className="w-50 p-3 mx-auto h-auto">
@@ -31,9 +50,9 @@ export default function AddBook() {
             <Form.Label>Select a genre</Form.Label>
             <Form.Select aria-label="Default select example">
               <option>Select a genre</option>
-              <option value="ACTION">Action</option>
-              <option value="DRAMA">Drama</option>
-              <option value="COMEDY">Comedy</option>
+              {genre?.data?.data?.map((g) => (
+                <option value={g._id}>{g.name}</option>
+              ))}
             </Form.Select>
           </Form.Group>
 
