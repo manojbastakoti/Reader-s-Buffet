@@ -92,15 +92,29 @@ export default function Profile() {
               exchange.
             </h6>
             <Card className="p-2 w-100 h-auto d-flex  flex-row gap-2 flex-wrap">
-              {bookResult.data.data.data.books.map((book) => (
-                <ProductCard
-                  key={book._id}
-                  book={book}
-                  title={book.title}
-                  price={book.price}
-                  img={process.env.REACT_APP_BASE_API + book.cover}
-                />
-              ))}
+              {bookResult?.data?.data?.data?.books.length !== 0 ? (
+                bookResult?.data?.data?.data?.books.map((book) => (
+                  <ProductCard
+                    key={book._id}
+                    book={book}
+                    title={book.title}
+                    price={book.price}
+                    img={process.env.REACT_APP_BASE_API + book.cover}
+                  />
+                ))
+              ) : (
+                <div>
+                  <span className="text-center">
+                    You don't have any books listed. <br />
+                    <LinkContainer to="/add-book">
+                      <b role="button" className="text-primary ">
+                        Click here{" "}
+                      </b>
+                    </LinkContainer>
+                    to add books.
+                  </span>
+                </div>
+              )}
             </Card>
           </Card>
         </Col>
