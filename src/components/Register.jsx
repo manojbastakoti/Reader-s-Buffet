@@ -19,7 +19,7 @@ const nameRegExp =
 // const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
 const phoneRegExp =
   /(\+)?(977)?-?(980|981|982|984|985|986|974|975|972|963|961|962|988)[0-9]{7}/;
-const userNameRegExp = /^[a-z0-9_-]{5,15}$/;
+const userNameRegExp = /^[a-z0-9_-]{3,15}$/;
 const passwordRegExp =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -34,7 +34,7 @@ const schema = Yup.object().shape({
     .max(100, "*Email must be less than 100 characters")
     .required("*Email is required"),
   username: Yup.string()
-    .min(5, "*Username must have 5-15 characters only")
+    .min(3, "*Username must have 3-15 characters only")
     .max(15, "*Username must have 5-15 characters only")
     .matches(
       userNameRegExp,
