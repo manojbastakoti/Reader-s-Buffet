@@ -1,4 +1,9 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import axios from "axios";
 import { Field, Form as FormikForm, Formik } from "formik";
 import React, { useState } from "react";
@@ -29,6 +34,7 @@ export default function AddBook() {
   const handleClose = () => setShowCreateGenre(false);
   const handleShow = () => setShowCreateGenre(true);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // fetch genres
   const {
@@ -50,6 +56,7 @@ export default function AddBook() {
       console.log(data);
       if (data.status === 200 || data.status === 201) {
         toast.success("Book added successfully");
+        queryClient.invalidateQueries("my-books");
         navigate("/profile");
       }
     },

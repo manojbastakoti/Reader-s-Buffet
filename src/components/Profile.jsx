@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
@@ -9,22 +9,55 @@ import ProductCard from "./Card";
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const { data, isLoading } = useQuery(
-    ["current-user"],
-    () => axios.get("/user/current-user"),
-    {
-      onSuccess: (data) => {
-        if (data.status === 200) {
-          dispatch(setUser(data.data.data));
-        }
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-    }
-  );
 
-  if (isLoading) return <div>Loading...</div>;
+  const getUser = () => axios.get("/user/current-user");
+  const getBooks = () => axios.get("/book/all");
+
+  const [userResult, bookResult] = useQueries({
+    queries: [
+      {
+        queryKey: ["current-user", 1],
+        queryFn: getUser,
+        onSuccess: (data) => {
+          if (data.status === 200) {
+            dispatch(setUser(data.data.data));
+          }
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      },
+      {
+        queryKey: ["my-books", 2],
+        queryFn: getBooks,
+        onSuccess: (data) => {
+          if (data.status === 200) {
+            // dispatch(setUser(data.data.data));
+          }
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      },
+    ],
+  });
+
+  // const {
+  //   data: { userData },
+  //   isLoading: isUserLoading,
+  //   isError: isUserError,
+  // } = userResult;
+
+  // const {
+  //   data: { books },
+  //   isLoading: isBookLoading,
+  //   isError: isBookError,
+  // } = bookResult;
+
+  console.log(bookResult);
+
+  if (userResult.isLoading || bookResult.isLoading)
+    return <div>Loading...</div>;
   return (
     <Container fluid>
       <Row className="p-3 g-3">
@@ -36,10 +69,14 @@ export default function Profile() {
               className="w-50 mx-auto"
             />
 
-            <h4 className="text-center">{data.data.data.fullName}</h4>
-            <h6 className="text-center">{data.data.data.username}</h6>
-            <p>{data.data.data.email}</p>
-            <p>{data.data.data.phone}</p>
+            <h4 className="text-center">
+              {userResult.data.data.data.fullName}
+            </h4>
+            <h6 className="text-center">
+              {userResult.data.data.data.username}
+            </h6>
+            <p>{userResult.data.data.data.email}</p>
+            <p>{userResult.data.data.data.phone}</p>
           </Card>
         </Col>
         <Col xs={9}>
@@ -55,71 +92,15 @@ export default function Profile() {
               exchange.
             </h6>
             <Card className="p-2 w-100 h-auto d-flex  flex-row gap-2 flex-wrap">
-              <ProductCard
-                title="Harry Potter"
-                price="Rs.450"
-                img="assets/harry.webp"
-              />{" "}
-              <ProductCard
-                title="Harry Potter"
-                price="Rs.450"
-                img="assets/harry.webp"
-              />{" "}
-              <ProductCard
-                title="Harry Potter"
-                price="Rs.450"
-                img="assets/harry.webp"
-              />{" "}
-              <ProductCard
-                title="Harry Potter"
-                price="Rs.450"
-                img="assets/harry.webp"
-              />{" "}
-              <ProductCard
-                title="Harry Potter"
-                price="Rs.450"
-                img="assets/harry.webp"
-              />{" "}
-              <ProductCard
-                title="Harry Potter"
-                price="Rs.450"
-                img="assets/harry.webp"
-              />{" "}
-              <ProductCard
-                title="Harry Potter"
-                price="Rs.450"
-                img="assets/harry.webp"
-              />{" "}
-              <ProductCard
-                title="Harry Potter"
-                price="Rs.450"
-                img="assets/harry.webp"
-              />{" "}
-              <ProductCard
-                title="Harry Potter"
-                price="Rs.450"
-                img="assets/harry.webp"
-              />{" "}
-              <ProductCard
-                title="Harry Potter"
-                price="Rs.450"
-                img="assets/harry.webp"
-              />{" "}
-              <ProductCard
-                title="Harry Potter"
-                price="Rs.450"
-                img="assets/harry.webp"
-              />{" "}
-              <ProductCard
-                title="Harry Potter"
-                price="Rs.450"
-                img="assets/harry.webp"
-              />{" "}
-              <ProductCard
-                title="Harry Potter"
-                price="Rs.450"
-                img="assets/harry.webp"
-              />
+              {bookResult.data.data.data.books.map((book) => (
+                <ProductCard
+                  key={book._id}
+                  book={book}
+                  title={book.title}
+                  price={book.price}
+                  img={process.env.REACT_APP_BASE_API + book.cover}
+                />
+              ))}
             </Card>
           </Card>
         </Col>
