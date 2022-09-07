@@ -1,8 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
-import { useEffect } from "react";
-import { useRef } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 
@@ -20,7 +18,7 @@ export default function CreateGenreModal({ show, handleClose }) {
         }
       },
       onError: (error) => {
-        toast.error(error.response.data.message);
+        toast.error(error?.response?.data?.message);
       },
     }
   );
