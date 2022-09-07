@@ -1,10 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React from "react";
-import { Button, Card, Container, Form } from "react-bootstrap";
+import React, { useState } from "react";
+import {
+  Button,
+  Card,
+  Container,
+  Form,
+  InputGroup,
+  Modal,
+} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import CreateGenreModal from "./CreateGenreModal";
 
 export default function AddBook() {
+  const [showCreateGenre, setShowCreateGenre] = useState(false);
+
+  const handleClose = () => setShowCreateGenre(false);
+  const handleShow = () => setShowCreateGenre(true);
   const {
     data: genre,
     isLoading,
@@ -54,6 +66,13 @@ export default function AddBook() {
                 <option value={g._id}>{g.name}</option>
               ))}
             </Form.Select>
+            <Form.Text className="text-muted">
+              Didn't find a relevant Genre in the above list? Try creating a new
+              Genre from{" "}
+              <b role="button" className="text-primary" onClick={handleShow}>
+                here
+              </b>
+            </Form.Text>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="pubDate">
@@ -89,6 +108,7 @@ export default function AddBook() {
           </Button>
         </Form>
       </Card>
+      <CreateGenreModal show={showCreateGenre} handleClose={handleClose} />
     </Container>
   );
 }
