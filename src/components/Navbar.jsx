@@ -97,7 +97,7 @@ function Appbar() {
                     className="text-black d-flex align-items-center gap-2"
                     title="This represents the number of books you can borrow from others."
                   >
-                    {user?.exchangeTokenCount} <Icon.PiggyBank size={20} />
+                    {user?.exchangeTokenCount || 0} <Icon.PiggyBank size={20} />
                   </Badge>
                 </OverlayTrigger>
                 <LinkContainer to="/profile">
