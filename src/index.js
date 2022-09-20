@@ -14,6 +14,19 @@ axios.defaults.baseURL = process.env.REACT_APP_BASE_API;
 axios.defaults.headers.common["Authorization"] = `Bearer ${Cookies.get(
   "token"
 )}`;
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      Cookies.remove("token");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
