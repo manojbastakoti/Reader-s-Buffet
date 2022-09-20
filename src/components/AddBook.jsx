@@ -57,7 +57,7 @@ export default function AddBook() {
       if (data.status === 200 || data.status === 201) {
         toast.success("Book added successfully");
         queryClient.invalidateQueries("my-books");
-        queryClient.invalidateQueries("current-user");
+        queryClient.invalidateQueries("exchange-token-count");
         navigate("/profile");
       }
     },
