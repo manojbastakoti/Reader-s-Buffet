@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 // import Carousel from "./components/Carousel";
 import "./styles/Carousel.css";
 // import ProductCard from "./components/Card";
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import About from "./components/About";
 import Blog from "./components/Blog";
@@ -18,8 +18,14 @@ import Verification from "./components/Verification";
 import PasswordReset from "./components/PasswordReset";
 import Profile from "./components/Profile";
 import AddBook from "./components/AddBook";
+import { useQueryClient } from "@tanstack/react-query";
+import { fetchCurrentUser } from "./utils/fetchCurrentUser";
 
 function App() {
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    queryClient.invalidateQueries(["current-user", 1]);
+  }, []);
   return (
     <div className="App">
       <BrowserRouter>

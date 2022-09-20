@@ -11,19 +11,37 @@ import * as Icon from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/authSlice";
 import { Badge, OverlayTrigger, Popover } from "react-bootstrap";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { setExchangeTokenCount } from "../redux/slices/exchangeSlice";
 
 function Appbar() {
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { exchangeTokenCount } = useSelector((state) => state.exchange);
+
+  // fetch exchange token count
+  useQuery(
+    ["exchange-token-count"],
+    async () => axios.get("/exchange/token-count"),
+    {
+      enabled: isAuthenticated,
+      onSuccess: (data) => {
+        if (data.status === 200) {
+          dispatch(setExchangeTokenCount(data.data.count));
+        }
+      },
+    }
+  );
 
   const exchangeTokenPopover = (
     <Popover id="popover-basic">
       <Popover.Header as="h3">Exchange Tokens</Popover.Header>
       <Popover.Body>
-        {user?.exchangeTokenCount > 0 ? (
+        {exchangeTokenCount > 0 ? (
           <>
-            You have {user?.exchangeTokenCount} exchange tokens. It means you
-            can borrow {user?.exchangeTokenCount} books from others.
+            You have {exchangeTokenCount} exchange tokens. It means you can
+            borrow {exchangeTokenCount} books from others.
           </>
         ) : (
           <>You have no exchange tokens.</>
@@ -97,7 +115,7 @@ function Appbar() {
                     className="text-black d-flex align-items-center gap-2"
                     title="This represents the number of books you can borrow from others."
                   >
-                    {user?.exchangeTokenCount || 0} <Icon.PiggyBank size={20} />
+                    {exchangeTokenCount || 0} <Icon.PiggyBank size={20} />
                   </Badge>
                 </OverlayTrigger>
                 <LinkContainer to="/profile">

@@ -6,18 +6,18 @@ import { useDispatch } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { setUser } from "../redux/slices/authSlice";
 import ProductCard from "./Card";
+import { fetchCurrentUser } from "../utils/fetchCurrentUser";
 
 export default function Profile() {
   const dispatch = useDispatch();
 
-  const getUser = () => axios.get("/user/current-user");
   const getBooks = () => axios.get("/book/all");
 
   const [userResult, bookResult] = useQueries({
     queries: [
       {
         queryKey: ["current-user", 1],
-        queryFn: getUser,
+        queryFn: fetchCurrentUser,
         onSuccess: (data) => {
           if (data.status === 200) {
             dispatch(setUser(data.data.data));
