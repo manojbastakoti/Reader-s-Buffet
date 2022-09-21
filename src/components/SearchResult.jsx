@@ -14,6 +14,8 @@ export default function SearchResult() {
     return axios.get(`/book/search?q=${q}`);
   });
 
+  const result = data?.data;
+
   return (
     <Container fluid className="p-3">
       <Container className="w-50 mx-auto">
@@ -29,7 +31,9 @@ export default function SearchResult() {
         <Col className="border p-3 " xs="6">
           <h4>Results</h4>
           <hr />
-          <SearchResultCard />
+          {result?.map((book) => (
+            <SearchResultCard key={book._id} book={book} />
+          ))}
         </Col>
         <Col></Col>
       </Row>
