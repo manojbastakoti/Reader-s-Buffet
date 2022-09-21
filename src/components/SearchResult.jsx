@@ -1,17 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useLayoutEffect } from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useQuery as useRouteQuery } from "../hooks/useQuery";
 import SearchBox from "./SearchBox";
+import SearchFilter from "./SearchFilter";
 import SearchResultCard from "./SearchResultCard";
 
 export default function SearchResult() {
   const navigate = useNavigate();
   const query = useRouteQuery();
+
   const q = query.get("q");
 
   const { data, isError, isLoading } = useQuery(["search", q], () => {
@@ -33,8 +35,8 @@ export default function SearchResult() {
   return (
     <Container fluid className="p-3">
       <Row className="g-3 gap-3 m-0 p-0">
-        <Col className="border p-3 " xs="3">
-          <h4>Filters</h4>
+        <Col className="border p-3 h-100 position-sticky top-0" xs="3">
+          <SearchFilter />
         </Col>
         <Col className="border p-3 " xs="6">
           {/* <Container className="w-50 mx-auto"> */}

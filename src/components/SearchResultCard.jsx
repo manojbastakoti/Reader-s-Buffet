@@ -31,7 +31,7 @@ export default function SearchResultCard({ book }) {
           </div>
           <p className="text-muted mb-1">By {book.author}</p>{" "}
           {book.genre.map((genre) => (
-            <Badge>{genre.name}</Badge>
+            <Badge key={genre._id}>{genre.name}</Badge>
           ))}
           <p className="text-muted mb-0">Owned by {book.owner.fullName}</p>
           <StarRatingComponent
