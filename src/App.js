@@ -20,6 +20,7 @@ import Profile from "./components/Profile";
 import AddBook from "./components/AddBook";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchCurrentUser } from "./utils/fetchCurrentUser";
+import BookDetails from "./components/BookDetails";
 
 function App() {
   const queryClient = useQueryClient();
@@ -43,6 +44,7 @@ function App() {
           <Route path="/verification" element={<Verification />} />
           <Route path="/password-reset" element={<PasswordReset />} />
           <Route path="/add-book" element={<AddBook />} />
+          <Route path="/book/:bookId" element={<BookDetails />} />
 
           {/* <Route path="/example" element={<Example/>}/> */}
         </Routes>

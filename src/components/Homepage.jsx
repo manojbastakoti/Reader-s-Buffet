@@ -1,9 +1,10 @@
 import React from "react";
 import Carousel from "./Carousel";
 import "../styles/Carousel.css";
-import ProductCard from "./Card";
+import ExchangeCard from "./ExchangeCard";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { LinkContainer } from "react-router-bootstrap";
 
 export default function Homepage() {
   const { data, isLoading, isError } = useQuery(["all-books"], async () =>
@@ -23,12 +24,7 @@ export default function Homepage() {
 
       <div className="d-flex flex-wrap gap-3 justify-content-center mt-5">
         {books?.map((book) => (
-          <ProductCard
-            key={book._id}
-            title={book.title}
-            price={book.price}
-            img={process.env.REACT_APP_BASE_API + book.cover}
-          />
+          <ExchangeCard key={book._id} book={book} />
         ))}
       </div>
     </>
