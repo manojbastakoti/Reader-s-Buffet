@@ -1,4 +1,4 @@
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
@@ -11,7 +11,7 @@ import { fetchCurrentUser } from "../utils/fetchCurrentUser";
 export default function Profile() {
   const dispatch = useDispatch();
 
-  const getBooks = () => axios.get("/book/all");
+  const getBooks = () => axios.get("/book/mine");
 
   const [userResult, bookResult] = useQueries({
     queries: [
