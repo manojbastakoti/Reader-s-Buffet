@@ -3,6 +3,9 @@ import { Badge, Button, Col, Container, Image, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import * as Icon from "react-bootstrap-icons";
+import "../styles/BookDetails.css";
+import { LinkContainer } from "react-router-bootstrap";
 export default function BookDetails() {
   const { bookId } = useParams();
 
@@ -37,8 +40,12 @@ export default function BookDetails() {
               <h2>{book?.title} </h2>
             </Col>
             <Col className="d-flex gap-2 justify-content-end">
-              <Button>Get</Button>
-              <Button variant="outline-success">Buy</Button>
+              <Button variant="bg-none shadow-none wishlistButton ">
+                <Icon.Heart />
+                {/* <Icon.HeartFill /> */}
+                <br />
+                Wishlist
+              </Button>
             </Col>
           </Row>
           <small className="text-muted">By {book?.author}</small>
@@ -52,9 +59,15 @@ export default function BookDetails() {
             Owned by <b>{book?.owner.fullName}</b>
           </p>
           <p>{book?.description}</p>
+
+          <p className="d-flex gap-2">
+            <LinkContainer to={`/exchange?bookId=${book?._id}`}>
+              <Button>Get</Button>
+            </LinkContainer>
+            <Button variant="outline-success">Buy</Button>
+          </p>
         </Col>
       </Row>
-      <h1>Exchange</h1>
     </Container>
   );
 }
