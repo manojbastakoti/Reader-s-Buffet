@@ -2,7 +2,6 @@ import "../styles/Navbar.css";
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -14,6 +13,7 @@ import { Badge, OverlayTrigger, Popover } from "react-bootstrap";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { setExchangeTokenCount } from "../redux/slices/exchangeSlice";
+import SearchBox from "./SearchBox";
 
 function Appbar() {
   const dispatch = useDispatch();
@@ -89,17 +89,7 @@ function Appbar() {
             </NavDropdown>
           </Nav>
 
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-dark">
-              <Icon.Search size={20} />
-            </Button>
-          </Form>
+          <SearchBox />
 
           <div className="d-flex gap-2 ms-4">
             {isAuthenticated ? (
