@@ -30,7 +30,10 @@ export default function BookDetails() {
             "border d-flex justify-content-center align-items-center p-3"
           }
         >
-          <Image src={process.env.REACT_APP_BASE_API + book?.cover} />
+          <Image
+            src={process.env.REACT_APP_BASE_API + book?.cover}
+            className="img-fluid w-75 rounded shadow"
+          />
         </Col>
         <Col className="border p-3">
           <h5 className="text-muted">About the book</h5>
