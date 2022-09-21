@@ -44,10 +44,12 @@ export default function BookDetails() {
           <small className="text-muted">By {book?.author}</small>
           <h4>Rs. {book?.price}</h4>
           <p>Published on {book?.publishedDate}</p>
-          <Badge>Action</Badge>
+          {book?.genre?.map((g) => (
+            <Badge key={g._id}>{g.name}</Badge>
+          ))}
 
           <p className="text-muted">
-            Owned by <b>Manoj Bastakoti</b>
+            Owned by <b>{book?.owner.fullName}</b>
           </p>
           <p>{book?.description}</p>
         </Col>
