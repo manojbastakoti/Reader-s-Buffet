@@ -6,7 +6,6 @@ import { useLayoutEffect } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useQuery as useRouteQuery } from "../hooks/useQuery";
-import SearchBox from "./SearchBox";
 import SearchFilter from "./SearchFilter";
 import SearchResultCard from "./SearchResultCard";
 
@@ -16,9 +15,17 @@ export default function SearchResult() {
 
   const q = query.get("q");
 
-  const { data, isError, isLoading } = useQuery(["search", q], () => {
-    return axios.get(`/book/search?q=${q}`);
-  });
+  const { data, isError, isLoading } = useQuery(
+    ["search", q],
+    () => {
+      return axios.post(`/book/search?q=${q}`);
+    },
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    }
+  );
 
   const result = data?.data;
 
@@ -36,7 +43,7 @@ export default function SearchResult() {
     <Container fluid className="p-3">
       <Row className="g-3 gap-3 m-0 p-0">
         <Col className="border p-3 h-100 position-sticky top-0" xs="3">
-          <SearchFilter />
+          <SearchFilter query={q} />
         </Col>
         <Col className="border p-3 " xs="6">
           {/* <Container className="w-50 mx-auto"> */}

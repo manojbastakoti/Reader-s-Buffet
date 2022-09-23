@@ -1,14 +1,26 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Formik, Form as FormikForm, Field } from "formik";
 import React from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
-export default function SearchFilter() {
+export default function SearchFilter({ query }) {
+  const queryClient = useQueryClient();
   const { data: genre } = useQuery(["genre"], async () => axios.get("/genre"));
+  const { mutate } = useMutation(
+    async (values) => axios.post("/book/search?q=" + query, values),
+    {
+      onSuccess: (data) => {
+        if (data.status === 200) {
+          queryClient.setQueryData(["search", query], data);
+        }
+      },
+    }
+  );
 
   const handleSubmit = (values) => {
     console.log(values);
+    mutate(values);
   };
   return (
     <>
