@@ -1,9 +1,10 @@
-import "../styles/Card.css";
+// import "../styles/Card.css";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import StarRatingComponent from "react-star-rating-component";
 import { LinkContainer } from "react-router-bootstrap";
+import styles from "../styles/ExchangeCard.module.css";
 
 function ExchangeCard({ book: { _id, title, price, cover } }) {
   const [rating, setRating] = useState(0);
@@ -13,7 +14,7 @@ function ExchangeCard({ book: { _id, title, price, cover } }) {
   };
   return (
     <LinkContainer to={`/book/${_id}`}>
-      <Card className="overflow-hidden" id="product">
+      <Card className={`overflow-hidden`} id="product">
         <div className="img-cont ">
           <Card.Img
             variant="top"

@@ -54,8 +54,6 @@ export default function Profile() {
   //   isError: isBookError,
   // } = bookResult;
 
-  console.log(bookResult);
-
   if (userResult.isLoading || bookResult.isLoading)
     return <div>Loading...</div>;
   return (

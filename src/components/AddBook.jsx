@@ -41,19 +41,11 @@ export default function AddBook() {
     data: genre,
     isLoading,
     isError,
-  } = useQuery(["genre"], async () => axios.get("/genre"), {
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  } = useQuery(["genre"], async () => axios.get("/genre"));
 
   // add book
   const { mutate } = useMutation((values) => axios.post("/book/new", values), {
     onSuccess: (data) => {
-      console.log(data);
       if (data.status === 200 || data.status === 201) {
         toast.success("Book added successfully");
         queryClient.invalidateQueries("my-books");

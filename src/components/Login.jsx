@@ -32,7 +32,6 @@ export default function Login() {
       },
       onSuccess: (data) => {
         if (data.status === 200 || data.status === 201) {
-          console.log(data.data);
           toast.update("loginToastId", {
             render: data.data.message,
             type: "success",

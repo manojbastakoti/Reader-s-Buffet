@@ -19,7 +19,6 @@ export default function SearchFilter({ query }) {
   );
 
   const handleSubmit = (values) => {
-    console.log(values);
     mutate(values);
   };
   return (
