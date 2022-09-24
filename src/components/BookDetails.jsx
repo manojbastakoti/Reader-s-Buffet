@@ -72,10 +72,18 @@ export default function BookDetails(props) {
 
           {!props.viewOnly && (
             <p className="d-flex gap-2">
-              <LinkContainer to={`/exchange?bookId=${book?._id}`}>
-                <Button>Get</Button>
-              </LinkContainer>
-              <Button variant="outline-success">Buy</Button>
+              {!book?.isMine && (
+                <>
+                  {book?.isHeldByMe ? (
+                    <Button variant="danger">Release book</Button>
+                  ) : (
+                    <LinkContainer to={`/exchange?bookId=${book?._id}`}>
+                      <Button>Get</Button>
+                    </LinkContainer>
+                  )}
+                  <Button variant="outline-success">Buy</Button>
+                </>
+              )}
             </p>
           )}
         </Col>
