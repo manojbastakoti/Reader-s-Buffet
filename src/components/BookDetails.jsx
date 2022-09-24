@@ -9,6 +9,7 @@ import "../styles/BookDetails.css";
 import { LinkContainer } from "react-router-bootstrap";
 import Loading from "./Loading";
 import { toast } from "react-toastify";
+import StarRatingComponent from "react-star-rating-component";
 export default function BookDetails(props) {
   const query = useRouteQuery();
   let { bookId } = useParams();
@@ -87,22 +88,52 @@ export default function BookDetails(props) {
           <p>{book?.description}</p>
 
           {!props.viewOnly && (
-            <p className="d-flex gap-2">
-              {!book?.isMine && (
-                <>
-                  {book?.isHeldByMe ? (
-                    <Button variant="danger" onClick={() => mutate(book?._id)}>
-                      Release book
-                    </Button>
-                  ) : (
-                    <LinkContainer to={`/exchange?bookId=${book?._id}`}>
-                      <Button>Get</Button>
-                    </LinkContainer>
-                  )}
-                  <Button variant="outline-success">Buy</Button>
-                </>
-              )}
-            </p>
+            <>
+              <div>
+                <h5 className="text-muted">Rating</h5>
+                <p
+                  className="d-flex align-items-center gap-2 mb-0"
+                  style={{ fontSize: "20px" }}
+                >
+                  <span
+                    style={{ fontSize: "25px" }}
+                    className="d-flex align-items-center"
+                  >
+                    <StarRatingComponent
+                      name="rate1"
+                      starCount={5}
+                      value={3.9}
+                      editing={false}
+                      // onStarClick={this.onStarClick.bind(this)}
+                    />{" "}
+                  </span>
+                  3.9
+                </p>
+                <span role="button" className="text-info " variant="none">
+                  Rate this book
+                </span>
+              </div>
+              <br />
+              <p className="d-flex gap-2">
+                {!book?.isMine && (
+                  <>
+                    {book?.isHeldByMe ? (
+                      <Button
+                        variant="danger"
+                        onClick={() => mutate(book?._id)}
+                      >
+                        Release book
+                      </Button>
+                    ) : (
+                      <LinkContainer to={`/exchange?bookId=${book?._id}`}>
+                        <Button>Get</Button>
+                      </LinkContainer>
+                    )}
+                    <Button variant="outline-success">Buy</Button>
+                  </>
+                )}
+              </p>
+            </>
           )}
         </Col>
       </Row>
