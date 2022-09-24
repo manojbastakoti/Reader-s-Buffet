@@ -27,6 +27,7 @@ jobs:
       env:
         REACT_APP_BASE_API: https://api.devduo.com
         NODE_ENV: production
+        CI: false npm run build
       run:  npm run build --if-present
       
     - name: Deploy to Server
