@@ -2,13 +2,19 @@ import React from "react";
 import { Badge, Button, Col, Container, Image, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useQuery as useRouteQuery } from "../hooks/useQuery";
 import axios from "axios";
 import * as Icon from "react-bootstrap-icons";
 import "../styles/BookDetails.css";
 import { LinkContainer } from "react-router-bootstrap";
 import Loading from "./Loading";
-export default function BookDetails() {
-  const { bookId } = useParams();
+export default function BookDetails(props) {
+  const query = useRouteQuery();
+  let { bookId } = useParams();
+
+  if (!bookId) {
+    bookId = query.get("bookId");
+  }
 
   const { data, isLoading, isError } = useQuery(
     [bookId],
@@ -64,12 +70,14 @@ export default function BookDetails() {
           </p>
           <p>{book?.description}</p>
 
-          <p className="d-flex gap-2">
-            <LinkContainer to={`/exchange?bookId=${book?._id}`}>
-              <Button>Get</Button>
-            </LinkContainer>
-            <Button variant="outline-success">Buy</Button>
-          </p>
+          {!props.viewOnly && (
+            <p className="d-flex gap-2">
+              <LinkContainer to={`/exchange?bookId=${book?._id}`}>
+                <Button>Get</Button>
+              </LinkContainer>
+              <Button variant="outline-success">Buy</Button>
+            </p>
+          )}
         </Col>
       </Row>
     </Container>
