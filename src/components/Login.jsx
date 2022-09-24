@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "../styles/Login.css";
@@ -11,10 +11,12 @@ import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/slices/authSlice";
 export default function Login() {
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [credentials, setCredentials] = useState({
     user: "",
     password: "",
@@ -23,18 +25,32 @@ export default function Login() {
   const { mutate, isLoading } = useMutation(
     (values) => axios.post("/user/login", values),
     {
+      onMutate: () => {
+        toast.loading("Logging in...", {
+          toastId: "loginToastId",
+        });
+      },
       onSuccess: (data) => {
         if (data.status === 200 || data.status === 201) {
-          console.log(data.data);
-          toast.success(data.data.message);
-          Cookies.set("token", data.data.data.token);
+          toast.update("loginToastId", {
+            render: data.data.message,
+            type: "success",
+            isLoading: false,
+            autoClose: true,
+          });
+          dispatch(login(data.data.data.token));
           navigate("/");
         }
       },
       onError: (error) => {
         if (error instanceof AxiosError) {
           console.log(error.response.data);
-          toast.error(error?.response?.data?.message);
+          toast.update("loginToastId", {
+            render: error?.response?.data?.message,
+            type: "error",
+            isLoading: false,
+            autoClose: true,
+          });
         } else {
           console.log(error);
         }
