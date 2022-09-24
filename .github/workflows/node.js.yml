@@ -25,7 +25,7 @@ jobs:
       
     - name: Build code
       env:
-        REACT_APP_BASE_API: https://api.devduo.com
+        REACT_APP_BASE_API: https://api.devduo.codes
         NODE_ENV: production
         CI: ""
       run:  npm run build --if-present
