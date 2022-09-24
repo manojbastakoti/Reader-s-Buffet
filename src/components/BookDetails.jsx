@@ -1,17 +1,18 @@
 import React from "react";
 import { Badge, Button, Col, Container, Image, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useQuery as useRouteQuery } from "../hooks/useQuery";
 import axios from "axios";
 import * as Icon from "react-bootstrap-icons";
 import "../styles/BookDetails.css";
 import { LinkContainer } from "react-router-bootstrap";
 import Loading from "./Loading";
+import { toast } from "react-toastify";
 export default function BookDetails(props) {
   const query = useRouteQuery();
   let { bookId } = useParams();
-
+  const queryClient = useQueryClient();
   if (!bookId) {
     bookId = query.get("bookId");
   }
@@ -21,6 +22,21 @@ export default function BookDetails(props) {
     async () => axios.get("/book/" + bookId),
     {
       enabled: !!bookId,
+    }
+  );
+
+  const { mutate } = useMutation(
+    async (id) => axios.patch("/book/release", { bookId: id }),
+    {
+      onSuccess: () => {
+        if (data.status === 200) {
+          toast.success("Book released successfully");
+          queryClient.invalidateQueries("exchange-token-count");
+        }
+      },
+      onError: (error) => {
+        toast.error(error?.response?.data?.message || "Something went wrong!");
+      },
     }
   );
 
@@ -75,7 +91,9 @@ export default function BookDetails(props) {
               {!book?.isMine && (
                 <>
                   {book?.isHeldByMe ? (
-                    <Button variant="danger">Release book</Button>
+                    <Button variant="danger" onClick={() => mutate(book?._id)}>
+                      Release book
+                    </Button>
                   ) : (
                     <LinkContainer to={`/exchange?bookId=${book?._id}`}>
                       <Button>Get</Button>
