@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 // import Carousel from "./components/Carousel";
 import "./styles/Carousel.css";
 // import ProductCard from "./components/Card";
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import About from "./components/About";
 import Blog from "./components/Blog";
@@ -16,16 +16,24 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Verification from "./components/Verification";
 import PasswordReset from "./components/PasswordReset";
-
-// import Example from "./components/Example";
+import Profile from "./components/Profile";
+import AddBook from "./components/AddBook";
+import { useQueryClient } from "@tanstack/react-query";
+import BookDetails from "./components/BookDetails";
+import SearchResult from "./components/SearchResult";
 
 function App() {
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    queryClient.invalidateQueries(["current-user", 1]);
+  }, []);
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/buy" element={<Buy />} />
@@ -35,6 +43,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/verification" element={<Verification />} />
           <Route path="/password-reset" element={<PasswordReset />} />
+          <Route path="/add-book" element={<AddBook />} />
+          <Route path="/book/:bookId" element={<BookDetails />} />
+          <Route path="/search" element={<SearchResult />} />
 
           {/* <Route path="/example" element={<Example/>}/> */}
         </Routes>

@@ -1,26 +1,24 @@
-.card{
-  height:400px;
-  width:20rem;
+.card {
+  height: 400px;
+  width: 20rem;
 }
-.card-body{
-    height:150px;
-    flex:none !important;
-    background-color:#f3f3ed !important;
-    margin-top:5px;
-
-
+.card-body {
+  height: 150px;
+  flex: none !important;
+  background-color: #f3f3ed !important;
+  margin-top: 5px;
 }
-.img-cont{
-    flex:1;
-    overflow:hidden;
-    height:350px;
-    display:flex;
-    justify-content:center;
+.img-cont {
+  flex: 1;
+  overflow: hidden;
+  height: 350px;
+  display: flex;
+  justify-content: center;
 }
 .img-cont img {
-    height:100%;
-    object-fit:contain;
+  height: 100%;
+  object-fit: contain;
 }
-#product{
-    border-radius: 0.75rem ;
+#product {
+  border-radius: 0.75rem;
 }

@@ -6,21 +6,37 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
-
+import { store } from "./redux/store";
 import "react-toastify/dist/ReactToastify.css";
+import { Provider } from "react-redux";
+import Cookies from "js-cookie";
 axios.defaults.baseURL = process.env.REACT_APP_BASE_API;
+axios.defaults.headers.common["Authorization"] = `Bearer ${Cookies.get(
+  "token"
+)}`;
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      Cookies.remove("token");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ToastContainer position="bottom-left" limit={4} />
-      <App />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <ToastContainer position="bottom-left" limit={4} autoClose={3000} />
+        <App />
+      </QueryClientProvider>
+    </Provider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
