@@ -7,6 +7,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { setUser } from "../redux/slices/authSlice";
 import ProductCard from "./Card";
 import { fetchCurrentUser } from "../utils/fetchCurrentUser";
+import Loading from "./Loading";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -67,8 +68,8 @@ export default function Profile() {
   //   isError: isBookError,
   // } = bookResult;
 
-  if (userResult.isLoading || bookResult.isLoading)
-    return <div>Loading...</div>;
+  if (userResult.isLoading || bookResult.isLoading) return <Loading />;
+
   return (
     <Container fluid>
       <Row className="p-3 g-3">

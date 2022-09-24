@@ -6,6 +6,7 @@ import { useLayoutEffect } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useQuery as useRouteQuery } from "../hooks/useQuery";
+import Loading from "./Loading";
 import SearchFilter from "./SearchFilter";
 import SearchResultCard from "./SearchResultCard";
 
@@ -36,7 +37,7 @@ export default function SearchResult() {
   }, []);
 
   if (!q) return <div>A search query is required.</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (!result || isError) return <div>Something went wrong!</div>;
 
   return (

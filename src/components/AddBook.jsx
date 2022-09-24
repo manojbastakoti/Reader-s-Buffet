@@ -19,7 +19,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CreateGenreModal from "./CreateGenreModal";
-
+import Loading from "./Loading";
 export default function AddBook() {
   const [showCreateGenre, setShowCreateGenre] = useState(false);
   const initialValues = {
@@ -69,7 +69,7 @@ export default function AddBook() {
     mutate(formData);
   };
 
-  if (isLoading) return <h2>Loading...</h2>;
+  if (isLoading) return <Loading />;
   if (isError) return <h2>Something went wrong. Try reloading the page </h2>;
 
   return (

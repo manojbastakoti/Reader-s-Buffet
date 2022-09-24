@@ -6,6 +6,7 @@ import ProductCard from "./Card";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { LinkContainer } from "react-router-bootstrap";
+import Loading from "./Loading";
 
 export default function Homepage() {
   const { data, isLoading, isError } = useQuery(["all-books"], async () =>
@@ -14,7 +15,7 @@ export default function Homepage() {
 
   const books = data?.data?.data?.books;
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (isError) return <div>Something went wrong!</div>;
 
   return (

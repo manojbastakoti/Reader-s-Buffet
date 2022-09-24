@@ -6,6 +6,7 @@ import axios from "axios";
 import * as Icon from "react-bootstrap-icons";
 import "../styles/BookDetails.css";
 import { LinkContainer } from "react-router-bootstrap";
+import Loading from "./Loading";
 export default function BookDetails() {
   const { bookId } = useParams();
 
@@ -19,8 +20,8 @@ export default function BookDetails() {
 
   const book = data?.data?.data;
 
+  if (isLoading) return <Loading />;
   if (isError || !book) return <div>Something went wrong!</div>;
-  if (isLoading) return <div>Loading...</div>;
   return (
     <Container fluid className="my-4">
       <Row>
