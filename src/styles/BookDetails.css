@@ -1,0 +1,7 @@
+.wishlistButton {
+  color: #1e1e1e;
+}
+.wishlistButton:hover {
+  color: #ff69b4;
+  transition: 0.4s;
+}

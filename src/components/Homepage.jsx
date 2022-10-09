@@ -1,36 +1,35 @@
-import React from 'react'
-import Carousel from './Carousel'
-import "../styles/Carousel.css"
-import ProductCard from './Card'
+import React from "react";
+import Carousel from "./Carousel";
+import "../styles/Carousel.css";
+import Loading from "./Loading";
+import ExchangeSection from "./ExchangeSection";
 
 export default function Homepage() {
+  // const { data, isLoading, isError } = useQuery(["all-books"], async () =>
+  //   axios.get("/book/all")
+  // );
+
+  // const books = data?.data?.data?.books;
+
+  // if (isLoading) return <Loading />;
+  // if (isError) return <div>Something went wrong!</div>;
+
   return (
     <>
-    <div><Carousel/></div>
+      <div>
+        <Carousel />
+      </div>
 
-    <div className="d-flex flex-wrap gap-3 justify-content-center mt-5">
-                <ProductCard title="Harry Potter" price="Rs.450"img="assets/harry.webp"/>
+      <ExchangeSection />
 
-
-                <ProductCard title="The Kite Runner" price="Rs.460" img="assets/kite.jpg"/>
-
-
-                <ProductCard title="Alchemist" price="Rs.500" img="assets/alchemist.jpg"/>
-
-                <ProductCard title="Karnali Blues" price="Rs.400" img="assets/karnali.jpg"/>
-
-                <ProductCard title="Seto Dharti" price="Rs.550" img="assets/seto.jpeg"/>
-                <ProductCard title="Palpasa Cafe" price="Rs.600" img="assets/palpasa.jpg"/>
-                <ProductCard title="Summer Love" price="Rs.400" img="assets/summer.jpg"/>
-                <ProductCard title="Pagal Basti" price="Rs.500" img="assets/pagal.jpg"/>
-                <ProductCard title="Muglan" price="Rs.400" img="assets/muglan.jpg"/>
-                <ProductCard title="Karodau Kasturi" price="Rs.350" img="assets/kasturi.jpg"/>
-
-
-                </div>
-
-
-
+      {/* <section className="d-flex flex-column gap-4 p-4 border mt-5 ">
+        <h3 className="text-center">Buy</h3>
+        <div className="d-flex  flex-wrap gap-3   px-4">
+          {books?.map((book) => (
+            <ProductCard key={book._id} book={book} />
+          ))}
+        </div>
+      </section> */}
     </>
-  )
+  );
 }
