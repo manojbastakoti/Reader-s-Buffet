@@ -68,18 +68,9 @@ function Appbar() {
             navbarScroll
           >
             <LinkContainer to="/">
-              <Navbar.Text className="me-2">Home</Navbar.Text>
+              <Navbar.Text className="me-3">Home</Navbar.Text>
             </LinkContainer>
-            <LinkContainer to="/about">
-              <Navbar.Text className="me-2">About</Navbar.Text>
-            </LinkContainer>
-            <LinkContainer to="/contact">
-              <Navbar.Text className="me-2">Contact</Navbar.Text>
-            </LinkContainer>
-            <LinkContainer to="/blog">
-              <Navbar.Text>Blog</Navbar.Text>
-            </LinkContainer>
-            <NavDropdown title="All Books" id="navbarScrollingDropdown">
+            <NavDropdown title="All Books" id="navbarScrollingDropdown" className="me-3">
               <LinkContainer to="/buy">
                 <NavDropdown.Item href="#action3">Buy</NavDropdown.Item>
               </LinkContainer>
@@ -87,6 +78,18 @@ function Appbar() {
                 <NavDropdown.Item href="#action4">Exchange</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>
+
+            <LinkContainer to="/blog">
+              <Navbar.Text className="me-3">Blog</Navbar.Text>
+            </LinkContainer>
+
+            <LinkContainer to="/blog/create-post">
+              <Navbar.Text className="me-3">Write</Navbar.Text>
+            </LinkContainer>
+
+            <LinkContainer to="/contact">
+              <Navbar.Text className="me-3">Contact</Navbar.Text>
+            </LinkContainer>
           </Nav>
 
           <SearchBox />
