@@ -4,8 +4,22 @@ import Image from "react-bootstrap/Image";
 import * as Icon from "react-bootstrap-icons";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+import { setNestedObjectValues } from "formik";
+import { Link } from "react-router-dom";
 
 export default function BlogSidebar() {
+  const [cats, setCats] = useState([]);
+
+  useEffect(() => {
+    const getCats = async () => {
+      const res = await axios.get("/category");
+      setCats(res.data);
+    };
+    getCats();
+  });
   return (
     <div className="blogSidebar d-flex flex-column gap-2 p-4">
       <div className="blogSidebarItem">
@@ -19,12 +33,12 @@ export default function BlogSidebar() {
       <div className="blogSidebarItem">
         <span className="blogSidebarTitle">CATEGORIES</span>
         <ul className="blogSidebarList">
-          <li className="blogSidebarListItem">Life</li>
-          <li className="blogSidebarListItem">Music</li>
-          <li className="blogSidebarListItem">Style</li>
-          <li className="blogSidebarListItem">Sport</li>
-          <li className="blogSidebarListItem">Cinema</li>
-          <li className="blogSidebarListItem">Tech</li>
+          {cats.map((c) => (
+            
+            <Link className="link" to={`/blog?cat=${c.name}`}>
+            <li className="blogSidebarListItem">{c.name}</li>
+            </Link>
+          ))}
         </ul>
       </div>
       <div className="blogSidebarItem">

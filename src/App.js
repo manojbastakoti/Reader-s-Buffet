@@ -5,7 +5,6 @@ import "./styles/Carousel.css";
 // import ProductCard from "./components/Card";
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import About from "./components/About";
 import Blog from "./components/Blog";
 import Buy from "./components/Buy";
 import Exchange from "./components/Exchange";
@@ -21,6 +20,8 @@ import AddBook from "./components/AddBook";
 import { useQueryClient } from "@tanstack/react-query";
 import BookDetails from "./components/BookDetails";
 import SearchResult from "./components/SearchResult";
+import PostDetailsPage from "./components/PostDetailsPage";
+import AddPost from "./components/AddPost";
 
 function App() {
   const queryClient = useQueryClient();
@@ -34,7 +35,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/buy" element={<Buy />} />
           <Route path="/exchange" element={<Exchange />} />
@@ -46,8 +46,8 @@ function App() {
           <Route path="/add-book" element={<AddBook />} />
           <Route path="/book/:bookId" element={<BookDetails />} />
           <Route path="/search" element={<SearchResult />} />
-
-          {/* <Route path="/example" element={<Example/>}/> */}
+          <Route path="blog/:postId" element={<PostDetailsPage/>}/>
+          <Route path="blog/create-post" element={<AddPost/>}/>
         </Routes>
         <Footer />
       </BrowserRouter>
