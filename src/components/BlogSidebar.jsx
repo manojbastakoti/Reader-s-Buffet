@@ -35,7 +35,7 @@ export default function BlogSidebar() {
         <ul className="blogSidebarList">
           {cats.map((c) => (
             
-            <Link className="link" to={`/blog?cat=${c.name}`}>
+            <Link className="link" to={`/blog?cat=${c._id}`}>
             <li className="blogSidebarListItem">{c.name}</li>
             </Link>
           ))}
