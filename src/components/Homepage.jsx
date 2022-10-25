@@ -3,6 +3,7 @@ import Carousel from "./Carousel";
 import "../styles/Carousel.css";
 import Loading from "./Loading";
 import ExchangeSection from "./ExchangeSection";
+import BuySection from "./BuySection";
 
 export default function Homepage() {
   // const { data, isLoading, isError } = useQuery(["all-books"], async () =>
@@ -19,8 +20,12 @@ export default function Homepage() {
       <div>
         <Carousel />
       </div>
-
+      <BuySection />
       <ExchangeSection />
+
+    
+
+     
 
       {/* <section className="d-flex flex-column gap-4 p-4 border mt-5 ">
         <h3 className="text-center">Buy</h3>

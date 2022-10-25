@@ -19,7 +19,7 @@ import Loading from "./Loading";
 import { toast } from "react-toastify";
 import StarRatingComponent from "react-star-rating-component";
 import { useState } from "react";
-export default function BookDetails(props) {
+export default function BuyBookDetails(props) {
   const [ratingModal, setRatingModal] = useState(false);
   const query = useRouteQuery();
   let { bookId } = useParams();
@@ -30,24 +30,9 @@ export default function BookDetails(props) {
 
   const { data, isLoading, isError } = useQuery(
     [bookId],
-    async () => axios.get("/book/" + bookId),
+    async () => axios.get("/book/buy/" + bookId),
     {
       enabled: !!bookId,
-    }
-  );
-
-  const { mutate } = useMutation(
-    async (id) => axios.patch("/book/release", { bookId: id }),
-    {
-      onSuccess: () => {
-        if (data.status === 200) {
-          toast.success("Book released successfully");
-          queryClient.invalidateQueries("exchange-token-count");
-        }
-      },
-      onError: (error) => {
-        toast.error(error?.response?.data?.message || "Something went wrong!");
-      },
     }
   );
 
@@ -90,15 +75,17 @@ export default function BookDetails(props) {
             <h4>Rs. {book?.price}</h4>
             <p>Published on {book?.publishedDate}</p>
             {book?.genre?.map((g) => (
-              <p>Genre:<b><i className="genre">{g.name}</i></b></p>
+              <p>
+                Genre :
+                <b>
+                  <i className="genre">{g.name}</i>
+                </b>
+              </p>
               // <Badge key={g._id}>{g.name}</Badge>
             ))}
 
-            <p className="text-muted">
-              Owned by <b>{book?.owner.fullName}</b>
-            </p>
             <p>{book?.description}</p>
-            <hr/>
+            <hr />
 
             {!props.viewOnly && (
               <>
@@ -132,25 +119,11 @@ export default function BookDetails(props) {
                   </span>
                 </div>
                 <br />
-                <hr/>
+                <hr />
                 <p className="d-flex gap-2">
-                  {!book?.isMine && (
-                    <>
-                      {book?.isHeldByMe ? (
-                        <Button
-                          variant="danger"
-                          onClick={() => mutate(book?._id)}
-                        >
-                          Release book
-                        </Button>
-                      ) : (
-                        <LinkContainer to={`/exchange?bookId=${book?._id}`}>
-                          <Button variant="outline-primary">Get</Button>
-                        </LinkContainer>
-                      )}
-                      {/* <Button variant="outline-success">Buy</Button> */}
-                    </>
-                  )}
+                  <Button variant="outline-success">
+                    Buy
+                  </Button>
                 </p>
               </>
             )}

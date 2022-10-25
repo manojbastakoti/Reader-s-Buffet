@@ -184,6 +184,7 @@ export default function AddBook() {
                       type="text"
                       as="textarea"
                       placeholder="Enter description about the book here"
+                      rows={5}
                       {...field}
                     />
                   )}
