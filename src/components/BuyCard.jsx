@@ -5,7 +5,6 @@ import Card from "react-bootstrap/Card";
 import StarRatingComponent from "react-star-rating-component";
 import { LinkContainer } from "react-router-bootstrap";
 
-
 function BuyCard({ book: { _id, title, price, cover } }) {
   const [rating, setRating] = useState(0);
 
@@ -27,9 +26,9 @@ function BuyCard({ book: { _id, title, price, cover } }) {
             <Card.Text>Rs. {price}</Card.Text>
             <div className="row">
               <div className="col-6">
-                <LinkContainer to="/">
+                <LinkContainer to={`/confirm/${_id}`}>
                   <Button
-                    variant="primary"
+                    variant="outline-dark"
                     className="w-100"
                     // onClick={(e) => {
                     //   setExchangeModelVisible(true);

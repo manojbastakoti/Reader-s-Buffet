@@ -24,6 +24,7 @@ import PostDetailsPage from "./components/PostDetailsPage";
 import AddPost from "./components/AddPost";
 import AddBuyBook from "./components/AddBuyBook";
 import BuyBookDetails from "./components/BuyBookDetails";
+import Confirm from "./components/Confirm";
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
           <Route path="blog/:postId" element={<PostDetailsPage/>}/>
           <Route path="blog/create-post" element={<AddPost/>}/>
           <Route path="/add-buy-book" element={<AddBuyBook/>}/>
+          <Route path="/confirm/:bookId" element={<Confirm/>}/>
         
 
 

@@ -24,7 +24,7 @@ export default function AddBook() {
   const [showCreateGenre, setShowCreateGenre] = useState(false);
   const initialValues = {
     title: "",
-    price: 0,
+    price: 50,
     author: "",
     genre: "",
     description: "",
@@ -107,10 +107,14 @@ export default function AddBook() {
                     <Form.Control
                       type="number"
                       placeholder="Enter price here"
+                      disabled
                       {...field}
                     />
                   )}
                 </Field>
+                <Form.Text className="text-muted" style={{color:"red"}}>
+                  *The price is fixed for exchange.
+                </Form.Text>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="author">
