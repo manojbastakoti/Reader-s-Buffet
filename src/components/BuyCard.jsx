@@ -4,10 +4,8 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import StarRatingComponent from "react-star-rating-component";
 import { LinkContainer } from "react-router-bootstrap";
-import styles from "../styles/ExchangeCard.module.css";
-import ExchangeDialog from "./ExchangeDIalog";
 
-function ExchangeCard({ book: { _id, title, price, cover } }) {
+function BuyCard({ book: { _id, title, price, cover } }) {
   const [rating, setRating] = useState(0);
 
   const handleClick = (rate) => {
@@ -15,7 +13,7 @@ function ExchangeCard({ book: { _id, title, price, cover } }) {
   };
   return (
     <>
-      <LinkContainer to={`/book/${_id}`}>
+      <LinkContainer to={`/book/buy/${_id}`}>
         <Card className={`overflow-hidden`} id="product">
           <div className="img-cont ">
             <Card.Img
@@ -28,16 +26,16 @@ function ExchangeCard({ book: { _id, title, price, cover } }) {
             <Card.Text>Rs. {price}</Card.Text>
             <div className="row">
               <div className="col-6">
-                <LinkContainer to={`/exchange?bookId=${_id}`}>
+                <LinkContainer to={`/confirm/${_id}`}>
                   <Button
-                    variant="primary"
+                    variant="outline-dark"
                     className="w-100"
                     // onClick={(e) => {
                     //   setExchangeModelVisible(true);
                     //   e.stopPropagation();
                     // }}
                   >
-                    Get
+                    Buy
                   </Button>
                 </LinkContainer>
               </div>
@@ -58,4 +56,4 @@ function ExchangeCard({ book: { _id, title, price, cover } }) {
   );
 }
 
-export default ExchangeCard;
+export default BuyCard;

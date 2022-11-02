@@ -54,7 +54,7 @@ export default function AddPost() {
         },
         onError: (error) => {
           console.log(error);
-        },
+                },
       },
       {
         queryKey: ["all-categories", 2],

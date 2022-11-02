@@ -22,6 +22,10 @@ import BookDetails from "./components/BookDetails";
 import SearchResult from "./components/SearchResult";
 import PostDetailsPage from "./components/PostDetailsPage";
 import AddPost from "./components/AddPost";
+import AddBuyBook from "./components/AddBuyBook";
+import BuyBookDetails from "./components/BuyBookDetails";
+import Confirm from "./components/Confirm";
+
 
 function App() {
   const queryClient = useQueryClient();
@@ -45,9 +49,17 @@ function App() {
           <Route path="/password-reset" element={<PasswordReset />} />
           <Route path="/add-book" element={<AddBook />} />
           <Route path="/book/:bookId" element={<BookDetails />} />
+          <Route path="/book/buy/:bookId" element={<BuyBookDetails />} />
+
+
           <Route path="/search" element={<SearchResult />} />
           <Route path="blog/:postId" element={<PostDetailsPage/>}/>
           <Route path="blog/create-post" element={<AddPost/>}/>
+          <Route path="/add-buy-book" element={<AddBuyBook/>}/>
+          <Route path="/confirm/:bookId" element={<Confirm/>}/>
+        
+
+
         </Routes>
         <Footer />
       </BrowserRouter>
