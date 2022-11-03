@@ -58,7 +58,7 @@ export default function PostDetailsPage() {
       await axios.delete("/blog/" + path, {
         data: { username: userResult?.data?.data?.data?.username },
       });
-      window.location.replace("/");
+      window.location.replace("/blog");
     } catch (err) {
       console.log(err);
     }
@@ -112,14 +112,14 @@ export default function PostDetailsPage() {
                         <div className="singlePostEdit">
                           <Row className="siglePostIcons">
                             <Icon.PencilSquare
-                              className="updateIcons"
+                              className="m-1 updateIcons"
                               size={16}
                               color="green"
                               onClick={() => setUpdateMode(true)}
                             />
 
                             <Icon.TrashFill
-                              className="updateIcons"
+                              className="m-1 updateIcons"
                               size={16}
                               color="red"
                               onClick={handleDelete}
@@ -145,7 +145,7 @@ export default function PostDetailsPage() {
                     <textarea
                       className="singlePostDescInput"
                       value={desc}
-                      rows={6}
+                      rows={10}
                       onChange={(e) => setDesc(e.target.value)}
                     />
                   ) : (

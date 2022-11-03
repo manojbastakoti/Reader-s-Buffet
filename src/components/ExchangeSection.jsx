@@ -22,7 +22,7 @@ export default function ExchangeSection() {
           Sorry, we don't have any books available for you to exchange
         </h5>
       ) : (
-        <div className="d-flex  flex-wrap gap-3  mt px-4">
+        <div className="d-flex  flex-wrap gap-3 justify-content-around mt px-4">
           {books?.map((book) => (
             <ExchangeCard key={book._id} book={book} />
           ))}

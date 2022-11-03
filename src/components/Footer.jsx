@@ -8,8 +8,11 @@ import Col from "react-bootstrap/Col";
 import * as Icon from "react-bootstrap-icons";
 import Image from "react-bootstrap/Image";
 import { LinkContainer } from "react-router-bootstrap";
+import { useSelector } from "react-redux";
 
 export default function Footer() {
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+
   return (
     <>
       <div className="FooterSection d-block mt-5">
@@ -23,13 +26,18 @@ export default function Footer() {
               <LinkContainer to="/">
                 <Nav.Link>Home</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/about">
-                <Nav.Link eventKey="link-1">About</Nav.Link>
-              </LinkContainer>
 
               <LinkContainer to="/blog">
                 <Nav.Link eventKey="link-3"> Blog</Nav.Link>
               </LinkContainer>
+
+              {isAuthenticated ? (
+                <LinkContainer to="/blog/create-post">
+                  <Nav.Link eventKey="link-3">Write</Nav.Link>
+                </LinkContainer>
+              ) : (
+                <></>
+              )}
             </Nav>
           </Col>
           <Col xs={3}>

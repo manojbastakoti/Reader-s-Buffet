@@ -62,7 +62,7 @@ export default function SearchFilter({ query }) {
             </Row>
           </Form.Group>
           <div className="d-flex justify-content-end">
-            <Button variant="warning" type="submit">
+            <Button variant="outline-success" type="submit">
               Filter
             </Button>
           </div>

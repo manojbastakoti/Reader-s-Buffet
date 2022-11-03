@@ -147,4 +147,3 @@ function Appbar() {
 }
 export default Appbar;
 
-// Added comment

@@ -121,9 +121,11 @@ export default function BuyBookDetails(props) {
                 <br />
                 <hr />
                 <p className="d-flex gap-2">
-                  <Button variant="outline-success">
+                <LinkContainer to={`/confirm/${bookId}`}>
+                  <Button variant="outline-dark">
                     Buy
                   </Button>
+                  </LinkContainer>
                 </p>
               </>
             )}
