@@ -22,14 +22,14 @@ export default function BlogSidebar() {
   });
   return (
     <div className="blogSidebar d-flex flex-column gap-2 p-4">
-      <div className="blogSidebarItem">
+      {/* <div className="blogSidebarItem">
         <span className="blogSidebarTitle">ABOUT ME</span>
         <Image src="./assets/profile.jpg" alt="Profile" fluid />
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit ratione
           est eum doloribus illum magnam placeat
         </p>
-      </div>
+      </div> */}
       <div className="blogSidebarItem">
         <span className="blogSidebarTitle">CATEGORIES</span>
         <ul className="blogSidebarList">

@@ -16,6 +16,9 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { useQuery as useRouteQuery } from "../hooks/useQuery";
+import KhaltiCheckout from "khalti-checkout-web";
+import myKey from "../khalti/KhaltiKey";
+import { Alert } from "react-bootstrap";
 
 const nameRegExp =
   /(^[A-Za-z]{2,16})([ ]{0,1})([A-Za-z]{2,16})?([ ]{0,1})?([A-Za-z]{2,16})?([ ]{0,1})?([A-Za-z]{2,16})/;
@@ -72,6 +75,58 @@ export default function Confirm() {
     };
     getBook();
   }, [bookId]);
+
+  const khaltiPrice = price + "00";
+
+  let config = {
+    // replace this key with yours
+    publicKey: myKey.publicTestKey,
+    productIdentity: bookId,
+    productName: title,
+    productUrl: "http://localhost:3000",
+    eventHandler: {
+      onSuccess(payload) {
+        // hit merchant api for initiating verfication
+        console.log(payload);
+        let data = {
+          token: payload.token,
+          amount: payload.amount,
+        };
+
+        axios
+          .get(
+            `https://meslaforum.herokuapp.com/khalti/${data.token}/${data.amount}/${myKey.secretKey}`
+          )
+          .then((response) => {
+            console.log(response.data);
+            const name = response.data.data.user.name;
+
+            alert(`Thanks for the purchase ${name}`);
+            
+            // Alert(response.data.data.user.name)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
+      // onError handler is optional
+      onError(error) {
+        // handle errors
+        console.log(error);
+      },
+      onClose() {
+        console.log("widget is closing");
+      },
+    },
+    paymentPreference: [
+      "KHALTI",
+      "EBANKING",
+      "MOBILE_BANKING",
+      "CONNECT_IPS",
+      "SCT",
+    ],
+  };
+  let checkout = new KhaltiCheckout(config);
 
   const navigate = useNavigate();
   const { mutate, isLoading } = useMutation(
@@ -168,30 +223,22 @@ export default function Confirm() {
 
                         <Form.Group className="m-3" controlId="price">
                           <Form.Control
-                            
                             type="text"
                             name="price"
                             onChange={handleChange}
-
-                            value={price}
-
+                            readOnly
+                            value={values.price}
                           />
                         </Form.Group>
 
                         <Form.Group className="m-3" controlId="bookName">
                           <Form.Control
-                            
-                            
                             type="text"
                             name="bookName"
                             onChange={handleChange}
-
-                            value={title}
-
+                            value={values.fullName}
                           />
                         </Form.Group>
-
-
 
                         <Form.Group className="m-3" controlId="formBasicEmail">
                           <Form.Label>Email</Form.Label>
@@ -252,7 +299,6 @@ export default function Confirm() {
                             type="text"
                             placeholder="Baneshwor/Koteshwor/Ratnapark"
                             name="area"
-                          
                             value={values.area}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -274,6 +320,17 @@ export default function Confirm() {
                             {isLoading ? "Continuing..." : "Continue"}
                           </Button>
                         </div>
+
+                        <div className=" m-3">
+                          <Button
+                            variant="warning"
+                            onClick={() =>
+                              checkout.show({ amount: khaltiPrice })
+                            }
+                          >
+                            Pay via Khalti
+                          </Button>
+                        </div>
                       </Form>
                     </Col>
                   </Row>
@@ -283,6 +340,8 @@ export default function Confirm() {
           </div>
           <div className="col-md-5">
             <div className="something">
+              <h4>Your Book</h4>
+
               <Card className={`overflow-hidden`} id="product">
                 <div className="img-cont ">
                   <Card.Img

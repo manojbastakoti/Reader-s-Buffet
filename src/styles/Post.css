@@ -36,7 +36,12 @@
 }
 
 .link {
-    color:black;
+    color:rgb(15, 15, 15);
+    text-decoration: none;
+}
+
+.link-cat {
+    color:#be9656;
     text-decoration: none;
 }
 
