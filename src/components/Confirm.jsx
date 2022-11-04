@@ -169,9 +169,10 @@ export default function Confirm() {
                 phone: "",
                 city: "Kathmandu",
                 area: "",
-                bookName: "",
-                price: "",
+                bookName: title,
+                price: price,
               }}
+            enableReinitialize
             >
               {({
                 handleSubmit,
@@ -227,6 +228,7 @@ export default function Confirm() {
                             name="price"
                             onChange={handleChange}
                             readOnly
+                            hidden
                             value={values.price}
                           />
                         </Form.Group>
@@ -235,6 +237,8 @@ export default function Confirm() {
                           <Form.Control
                             type="text"
                             name="bookName"
+                            readOnly
+                            hidden
                             onChange={handleChange}
                             value={values.bookName}
                           />

@@ -27,6 +27,7 @@ import BuyBookDetails from "./components/BuyBookDetails";
 import Confirm from "./components/Confirm";
 import ExchangeSection from "./components/ExchangeSection";
 // import Admin from "./components/Admin";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 function App() {
@@ -52,13 +53,11 @@ function App() {
           <Route path="/add-book" element={<AddBook />} />
           <Route path="/book/:bookId" element={<BookDetails />} />
           <Route path="/book/buy/:bookId" element={<BuyBookDetails />} />
-
-
           <Route path="/search" element={<SearchResult />} />
           <Route path="blog/:postId" element={<PostDetailsPage/>}/>
           <Route path="blog/create-post" element={<AddPost/>}/>
           <Route path="/add-buy-book" element={<AddBuyBook/>}/>
-          <Route path="/confirm/:bookId" element={<Confirm/>}/>
+          <Route path="/confirm/:bookId" element={<ProtectedRoute><Confirm/></ProtectedRoute>}/>
           <Route path="/exchangePage" element={<ExchangeSection/>}/>
 
           {/* <Route path="/admin" element={<Admin/>}/> */}
