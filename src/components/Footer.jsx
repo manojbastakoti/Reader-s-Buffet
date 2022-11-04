@@ -46,7 +46,7 @@ export default function Footer() {
               <LinkContainer to="/buy">
                 <Nav.Link eventKey="link-1"> Buy</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/exchange">
+              <LinkContainer to="/exchangePage">
                 <Nav.Link eventKey="link-2"> Exchange</Nav.Link>
               </LinkContainer>
             </Nav>

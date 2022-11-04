@@ -78,7 +78,7 @@ function Appbar() {
               <LinkContainer to="/buy">
                 <NavDropdown.Item href="#action3">Buy</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to="/exchange">
+              <LinkContainer to="/exchangePage">
                 <NavDropdown.Item href="#action4">Exchange</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>

@@ -9,7 +9,25 @@ import "../styles/Contact.css";
 import * as Icon from "react-bootstrap-icons";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
-// import { Form } from "react-bootstrap";
+import * as Yup from "yup";
+
+const nameRegExp =
+  /(^[A-Za-z]{2,16})([ ]{0,1})([A-Za-z]{2,16})?([ ]{0,1})?([A-Za-z]{2,16})?([ ]{0,1})?([A-Za-z]{2,16})/;
+const emailRegExp =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+const Schema = Yup.object().shape({
+  fullName: Yup.string()
+    .min(2, "*Name must have at least 2 characters")
+    .matches(nameRegExp, "*Please enter a valid name")
+    .max(100, "*Names can't be longer than 100 characters")
+    .required("*Name is required"),
+  email: Yup.string()
+    .email("*Must be a valid email address")
+    .matches(emailRegExp, "*Please enter a valid email address")
+    .max(100, "*Email must be less than 100 characters")
+    .required("*Email is required"),
+});
 
 export default function Contact() {
   const initialValues = {
@@ -21,22 +39,23 @@ export default function Contact() {
   const navigate = useNavigate();
 
   // add post
-  const { mutate } = useMutation((values) => axios.post("/contact/message", values), {
-   
-    onSuccess: (data) => {
-      console.log(data)
-      if (data.status === 200 || data.status === 201) {
-        toast.success("Message sent successfully");
-        navigate("/");
-      }
-    },
-    onError: (error) => {
-      toast.error(error?.response?.data?.message);
-    },
-  });
+  const { mutate } = useMutation(
+    (values) => axios.post("/contact/message", values),
+    {
+      onSuccess: (data) => {
+        console.log(data);
+        if (data.status === 200 || data.status === 201) {
+          toast.success("Message sent successfully");
+          navigate("/");
+        }
+      },
+      onError: (error) => {
+        toast.error(error?.response?.data?.message);
+      },
+    }
+  );
 
   const handleSubmit = (values) => {
-   
     mutate(values);
   };
 
@@ -93,69 +112,89 @@ export default function Contact() {
           </div>
           {/* <div className="formContainer"> */}
           <div className="col-md-6 right">
-
-
             <Formik
               initialValues={initialValues}
               onSubmit={handleSubmit}
+              validationSchema={Schema}
               enableReinitialize
             >
-              {() => (
+              {({
+                handleSubmit,
+                handleChange,
+                handleBlur,
+                values,
+                touched,
+                isValid,
+                errors,
+              }) => (
                 <Container className="py-3 formContainer">
                   {/* <Card bg="warning" className="w-70 p-1 mx-auto h-auto"> */}
-                    <h2 className="text-center"> CONTACT FORM</h2>
-                    
-                    <FormikForm className="w-100 mx-auto">
-                      <Form.Group className="mb-3" controlId="fullName">
-                        <Field name="fullName">
-                          {({ field }) => (
-                            <Form.Control
-                              type="text"
-                              placeholder="Enter your name"
-                              {...field}
-                             
-                            />
-                          )}
-                        </Field>
-                      </Form.Group>
+                  <h2 className="text-center"> CONTACT FORM</h2>
 
-                      <Form.Group className="mb-3" controlId="email">
-                        <Field name="email">
-                          {({ field }) => (
-                            <Form.Control
-                              type="email"
-                              placeholder="Enter your email"
-                              {...field}
-                            />
-                          )}
-                        </Field>
-                      </Form.Group>
+                  <Form noValidate onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3" controlId="fullName">
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter full name"
+                        name="fullName"
+                        value={values.fullName}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        isInvalid={!!errors.fullName}
+                      />
+                      {touched.fullName && errors.fullName && (
+                        <Form.Control.Feedback type="invalid">
+                          {errors.fullName}
+                        </Form.Control.Feedback>
+                      )}
+                    </Form.Group>
 
-                      <Form.Group className="mb-3" controlId="message">
-                        <Field name="message">
-                          {({ field }) => (
-                            <Form.Control
-                              type="text"
-                              as="textarea"
-                              rows={5}
-                              placeholder="Enter your message"
-                              {...field}
-                            />
-                          )}
-                        </Field>
-                      </Form.Group>
+                    <Form.Group className="mb-3" controlId="email">
+                      <Form.Control
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        value={values.email}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        isInvalid={!!errors.email}
+                      />
+                      {touched.email && errors.email && (
+                        <Form.Control.Feedback type="invalid">
+                          {errors.email}
+                        </Form.Control.Feedback>
+                      )}
+                    </Form.Group>
 
-                      <Button variant="outline-dark" type="submit" className="ms-2">
-                        SUBMIT
-                      </Button>
-                    </FormikForm>
+                    <Form.Group className="mb-3" controlId="message">
+                      <Field name="message">
+                        {({ field }) => (
+                          <Form.Control
+                            type="text"
+                            as="textarea"
+                            rows={5}
+                            placeholder="Enter your message"
+                            {...field}
+                          />
+                        )}
+                      </Field>
+                    </Form.Group>
+
+                    <Button
+                      variant="outline-dark"
+                      type="submit"
+                      className="ms-2"
+                    >
+                      SUBMIT
+                    </Button>
+                  </Form>
                   {/* </Card> */}
                 </Container>
               )}
             </Formik>
           </div>
-          </div>
         </div>
+      </div>
       {/* </div> */}
     </>
   );

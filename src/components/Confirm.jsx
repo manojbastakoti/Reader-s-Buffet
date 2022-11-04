@@ -236,7 +236,7 @@ export default function Confirm() {
                             type="text"
                             name="bookName"
                             onChange={handleChange}
-                            value={values.fullName}
+                            value={values.bookName}
                           />
                         </Form.Group>
 
