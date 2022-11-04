@@ -5,12 +5,7 @@ import Card from "react-bootstrap/Card";
 import StarRatingComponent from "react-star-rating-component";
 import { LinkContainer } from "react-router-bootstrap";
 
-function BuyCard({ book: { _id, title, price, cover } }) {
-  const [rating, setRating] = useState(0);
-
-  const handleClick = (rate) => {
-    setRating(rate);
-  };
+function BuyCard({ book: { _id, title, price, cover, rating } }) {
   return (
     <>
       <LinkContainer to={`/book/buy/${_id}`}>
@@ -43,7 +38,7 @@ function BuyCard({ book: { _id, title, price, cover } }) {
                 <StarRatingComponent
                   name="rate1"
                   starCount={5}
-                  value={3}
+                  value={rating || 0}
                   editing={false}
                   // onStarClick={this.onStarClick.bind(this)}
                 />
