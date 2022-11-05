@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 import StarRatingComponent from "react-star-rating-component";
 import { useState } from "react";
 export default function BookDetails(props) {
+  const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
   const [ratingModal, setRatingModal] = useState(false);
   const query = useRouteQuery();
   let { bookId } = useParams();
@@ -33,6 +34,20 @@ export default function BookDetails(props) {
     async () => axios.get("/book/" + bookId),
     {
       enabled: !!bookId,
+    }
+  );
+
+  const wishListMutation = useMutation(
+    async (id) => axios.post("/book/add-to-wishlist", { bookId: id }),
+    {
+      onSuccess: (data) => {
+        if (data.status === 200) {
+          toast.success(data.data.message);
+        }
+      },
+      onError: (error) => {
+        toast.error(error?.response?.data?.message || "Something went wrong!");
+      },
     }
   );
 
@@ -50,6 +65,11 @@ export default function BookDetails(props) {
       },
     }
   );
+
+  const addToWishlist = () => {
+    setIsAddedToWishlist((prev) => !prev);
+    wishListMutation.mutate(bookId);
+  };
 
   const book = data?.data?.data;
 
@@ -78,9 +98,15 @@ export default function BookDetails(props) {
                 <h2>{book?.title} </h2>
               </Col>
               <Col className="d-flex gap-2 justify-content-end">
-                <Button variant="bg-none shadow-none wishlistButton ">
-                  <Icon.Heart />
-                  {/* <Icon.HeartFill /> */}
+                <Button
+                  variant="bg-none shadow-none wishlistButton "
+                  onClick={addToWishlist}
+                >
+                  {isAddedToWishlist ? (
+                    <Icon.HeartFill className="text-danger" />
+                  ) : (
+                    <Icon.Heart className="text-danger" />
+                  )}
                   <br />
                   Wishlist
                 </Button>
