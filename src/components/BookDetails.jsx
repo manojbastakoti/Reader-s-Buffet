@@ -34,6 +34,12 @@ export default function BookDetails(props) {
     async () => axios.get("/book/" + bookId),
     {
       enabled: !!bookId,
+      onSuccess: (data) => {
+        if (data.status === 200) {
+          console.log(data.data);
+          setIsAddedToWishlist(data?.data?.data.isWishlistedByMe);
+        }
+      },
     }
   );
 
@@ -42,6 +48,7 @@ export default function BookDetails(props) {
     {
       onSuccess: (data) => {
         if (data.status === 200) {
+          queryClient.invalidateQueries(bookId);
           toast.success(data.data.message);
         }
       },
@@ -67,7 +74,7 @@ export default function BookDetails(props) {
   );
 
   const addToWishlist = () => {
-    setIsAddedToWishlist((prev) => !prev);
+    // setIsAddedToWishlist((prev) => !prev);
     wishListMutation.mutate(bookId);
   };
 
