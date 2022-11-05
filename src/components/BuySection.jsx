@@ -9,7 +9,7 @@ export default function BuySection() {
     axios.get("/book/buy/all")
   );
 
-  const books = data?.data?.data?.buybooks;
+  const books = data?.data;
 
   if (isLoading) return <Loading />;
   if (isError) return <div>Something went wrong!</div>;
