@@ -101,7 +101,7 @@ export default function Login({noRedirect}) {
 
   return (
     <>
-      <div>
+      <div className="whole">
         <Row>
           <Col xs={10} md={8} lg={4} className="login-container ">
             <h1>Reader's Buffet</h1>

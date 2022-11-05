@@ -36,3 +36,8 @@
   position: absolute;
   font-size: .8em;
 }
+
+.full {
+  margin-top: 30px;
+  overflow: hidden;
+}
