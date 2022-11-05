@@ -26,9 +26,14 @@ import AddBuyBook from "./components/AddBuyBook";
 import BuyBookDetails from "./components/BuyBookDetails";
 import Confirm from "./components/Confirm";
 import ExchangeSection from "./components/ExchangeSection";
-// import Admin from "./components/Admin";
+import Admin from "./components/admin/Admin";
 import ProtectedRoute from "./components/ProtectedRoute";
+import UserList from "./components/admin/UserList";
+import PostList from "./components/admin/PostList";
 
+import Home from "./components/admin/Home";
+import BookList from "./components/admin/BookList";
+import FeedbackList from "./components/admin/FeedbackList";
 
 function App() {
   const queryClient = useQueryClient();
@@ -38,7 +43,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+        {/* <Navbar /> */}
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/profile" element={<Profile />} />
@@ -54,18 +59,31 @@ function App() {
           <Route path="/book/:bookId" element={<BookDetails />} />
           <Route path="/book/buy/:bookId" element={<BuyBookDetails />} />
           <Route path="/search" element={<SearchResult />} />
-          <Route path="blog/:postId" element={<PostDetailsPage/>}/>
-          <Route path="blog/create-post" element={<AddPost/>}/>
-          <Route path="/add-buy-book" element={<AddBuyBook/>}/>
-          <Route path="/confirm/:bookId" element={<ProtectedRoute><Confirm/></ProtectedRoute>}/>
-          <Route path="/exchangePage" element={<ExchangeSection/>}/>
+          <Route path="blog/:postId" element={<PostDetailsPage />} />
+          <Route path="blog/create-post" element={<AddPost />} />
+          <Route path="/add-buy-book" element={<AddBuyBook />} />
+          <Route
+            path="/confirm/:bookId"
+            element={
+              <ProtectedRoute>
+                <Confirm />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/exchangePage" element={<ExchangeSection />} />
 
-          {/* <Route path="/admin" element={<Admin/>}/> */}
-        
-
-
+          {/* Admin Routes */}
+          <Route path="/admin" element={ <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>}>
+            <Route path="/admin/users" element={<UserList />} />
+            <Route path="/admin/posts" element={<PostList />} />
+            <Route path="/admin/books" element={<BookList />} />
+            <Route path="/admin/feedbacks" element={<FeedbackList />} />
+            <Route path="/admin/home" element={<Home />} />
+          </Route>
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </div>
   );
