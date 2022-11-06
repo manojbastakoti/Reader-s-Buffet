@@ -16,6 +16,9 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { useQuery as useRouteQuery } from "../hooks/useQuery";
+import KhaltiCheckout from "khalti-checkout-web";
+import myKey from "../khalti/KhaltiKey";
+import { Alert } from "react-bootstrap";
 
 const nameRegExp =
   /(^[A-Za-z]{2,16})([ ]{0,1})([A-Za-z]{2,16})?([ ]{0,1})?([A-Za-z]{2,16})?([ ]{0,1})?([A-Za-z]{2,16})/;
@@ -49,6 +52,8 @@ const schema = Yup.object().shape({
 });
 
 export default function Confirm() {
+  const navigate = useNavigate();
+
   const query = useRouteQuery();
   let { bookId } = useParams();
   if (!bookId) {
@@ -73,14 +78,105 @@ export default function Confirm() {
     getBook();
   }, [bookId]);
 
-  const navigate = useNavigate();
+  const khaltiPrice = price + "00";
+
+  let config = {
+    // replace this key with yours
+    publicKey: myKey.publicTestKey,
+    productIdentity: bookId,
+    productName: title,
+    productUrl: "http://localhost:3000",
+    eventHandler: {
+      onSuccess(payload) {
+        // hit merchant api for initiating verfication
+        console.log(payload);
+        let data = {
+          token: payload.token,
+          amount: payload.amount,
+          
+        };
+
+        axios
+          .get(
+            `https://meslaforum.herokuapp.com/khalti/${data.token}/${data.amount}/${myKey.secretKey}`
+          )
+          .then((response) => {
+            // console.log(response);
+            const name = response.data.data.user.name;
+            const type = response.data.data.type.name;
+            const state = response.data.data.state.name;
+            const product_id = response.data.data.product_identity;
+            const total = response.data.data.amount;
+
+            // console.log(name)
+            // console.log(type)
+            // console.log(state)
+            // console.log(product_id)
+            // console.log(total)
+
+            // alert(`Thanks for the purchase ${name}`);
+            
+            // navigate(`/receipt`);
+
+            navigate(
+              '/receipt',
+              {
+                state: {
+                  name,
+                  title,
+                  type,
+                  state,
+                  product_id,
+                  total,
+                }
+              }
+            );
+
+            
+            // Alert(response.data.data.user.name)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
+      // onError handler is optional
+      onError(error) {
+        // handle errors
+        console.log(error);
+      },
+      onClose() {
+        console.log("widget is closing");
+      },
+    },
+    paymentPreference: [
+      "KHALTI",
+      "EBANKING",
+      "MOBILE_BANKING",
+      "CONNECT_IPS",
+      "SCT",
+    ],
+  };
+  let checkout = new KhaltiCheckout(config);
+
   const { mutate, isLoading } = useMutation(
     async (values) => axios.post("/order/new", values),
     {
       onSuccess: (data) => {
         if (data.status === 200 || data.status === 201) {
-          toast.success(data.data.message);
-          navigate(`/`);
+          checkout.show({ amount: khaltiPrice })
+          console.log(data)
+          const area = data.data.area;
+          // navigate(
+          //   '/receipt',
+          //   {
+          //     state: {
+                
+          //      area
+          //     }
+          //   }
+          // );
+
+          // toast.success(data.data.message);
         }
       },
       onError: (error) => {
@@ -114,9 +210,10 @@ export default function Confirm() {
                 phone: "",
                 city: "Kathmandu",
                 area: "",
-                bookName: "",
-                price: "",
+                bookName: title,
+                price: price,
               }}
+            enableReinitialize
             >
               {({
                 handleSubmit,
@@ -168,30 +265,25 @@ export default function Confirm() {
 
                         <Form.Group className="m-3" controlId="price">
                           <Form.Control
-                            
                             type="text"
                             name="price"
                             onChange={handleChange}
-
-                            value={price}
-
+                            readOnly
+                            hidden
+                            value={values.price}
                           />
                         </Form.Group>
 
                         <Form.Group className="m-3" controlId="bookName">
                           <Form.Control
-                            
-                            
                             type="text"
                             name="bookName"
+                            readOnly
+                            hidden
                             onChange={handleChange}
-
-                            value={title}
-
+                            value={values.bookName}
                           />
                         </Form.Group>
-
-
 
                         <Form.Group className="m-3" controlId="formBasicEmail">
                           <Form.Label>Email</Form.Label>
@@ -252,7 +344,6 @@ export default function Confirm() {
                             type="text"
                             placeholder="Baneshwor/Koteshwor/Ratnapark"
                             name="area"
-                          
                             value={values.area}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -269,10 +360,24 @@ export default function Confirm() {
                           <Button
                             variant="primary"
                             type="submit"
+                            // onClick={() =>
+                            //   checkout.show({ amount: khaltiPrice })
+                            // }
                             disabled={!isValid || isLoading}
                           >
-                            {isLoading ? "Continuing..." : "Continue"}
+                            {isLoading ? "Continuing..." : "Proceed to payment"}
                           </Button>
+                        </div>
+
+                        <div className=" m-3">
+                          {/* <Button
+                            variant="warning"
+                            onClick={() =>
+                              checkout.show({ amount: khaltiPrice })
+                            }
+                          >
+                            Pay via Khalti
+                          </Button> */}
                         </div>
                       </Form>
                     </Col>
@@ -283,6 +388,8 @@ export default function Confirm() {
           </div>
           <div className="col-md-5">
             <div className="something">
+              <h4>Your Book</h4>
+
               <Card className={`overflow-hidden`} id="product">
                 <div className="img-cont ">
                   <Card.Img

@@ -30,7 +30,7 @@ function ExchangeCard({ book: { _id, title, price, cover, rating } }) {
               <div className="col-6">
                 <LinkContainer to={`/exchange?bookId=${_id}`}>
                   <Button
-                    variant="primary"
+                    variant="outline-dark"
                     className="w-100"
                     // onClick={(e) => {
                     //   setExchangeModelVisible(true);

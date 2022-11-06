@@ -8,7 +8,6 @@ export default function BuySection() {
   const { data, isLoading, isError } = useQuery(["all-buyBooks"], async () =>
     axios.get("/book/buy/all")
   );
-
   const books = data?.data?.data?.buybooks;
 
   if (isLoading) return <Loading />;
@@ -22,7 +21,7 @@ export default function BuySection() {
           Sorry, we don't have any books right now...
         </h5>
       ) : (
-        <div className="d-flex  flex-wrap gap-3  mt px-4">
+        <div className="d-flex  flex-wrap gap-3  mt px-4 justify-content-around">
           {books?.map((book) => (
             <BuyCard key={book._id} book={book} />
           ))}

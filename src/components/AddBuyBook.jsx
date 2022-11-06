@@ -79,7 +79,10 @@ import {
       >
         {(props) => (
           <Container className="py-3">
-            <Card className="w-50 p-3 mx-auto h-auto">
+            {/* <Card className="w-50 p-3 mx-auto h-auto"> */}
+            <div className="container-fluid">
+            <div className="row">
+              <div className="col-md-6">
               <h2 className="text-center"> Add book</h2>
               <hr />
               <FormikForm className="w-100 mx-auto">
@@ -196,7 +199,11 @@ import {
                   Add book
                 </Button>
               </FormikForm>
-            </Card>
+            {/* </Card> */}
+            </div>
+            </div>
+            </div>
+
             <CreateGenreModal show={showCreateGenre} handleClose={handleClose} />
           </Container>
         )}

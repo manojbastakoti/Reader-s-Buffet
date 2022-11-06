@@ -8,3 +8,8 @@
     padding: 10px;
     margin:20px !important;
 }
+
+.navLink {
+    /* color:red !important; */
+    cursor: pointer;
+}

@@ -36,7 +36,12 @@
 }
 
 .link {
-    color:black;
+    color:rgb(15, 15, 15);
+    text-decoration: none;
+}
+
+.link-cat {
+    color:#be9656;
     text-decoration: none;
 }
 
@@ -54,6 +59,7 @@
     color: #444;
     line-height: 24px;
     margin-top: 15px;
+    margin-left: 5px;
     overflow-wrap:break-word;
     overflow: hidden;
     text-overflow: ellipsis;
