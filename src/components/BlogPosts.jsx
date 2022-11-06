@@ -3,8 +3,6 @@ import "../styles/BlogPosts.css";
 import Post from "./Post";
 
 export default function BlogPosts({ posts }) {
-
-  console.log(posts)
   return (
     <>
       <div className="blogPosts">

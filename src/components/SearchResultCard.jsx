@@ -43,7 +43,7 @@ export default function SearchResultCard({ book }) {
           />
           <div className="d-flex justify-content-end flex-grow-1 align-items-end">
             <LinkContainer to={`/book/buy/${book._id}`}>
-              <Button>View</Button>
+              <Button variant="outline-primary">View</Button>
             </LinkContainer>
           </div>
         </Col>

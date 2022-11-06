@@ -22,12 +22,12 @@ export default function Blog() {
       <BlogHeader />
       <div className="container-fluid">
         <div className="row ">
-          <div className="abc col-sm-11 col-md-8 col-lg-9">
+          <div className="abc col-sm-11 col-md-10 col-lg-12">
             <BlogPosts posts = {posts} />
           </div>
-          <div className="def col-sm-8 col-md-4 col-lg-3">
+          {/* <div className="def col-sm-8 col-md-4 col-lg-3">
             <BlogSidebar />
-          </div>
+          </div> */}
         </div>
       </div>
     </>

@@ -68,27 +68,35 @@ function Appbar() {
             navbarScroll
           >
             <LinkContainer to="/">
-              <Navbar.Text className="me-3">Home</Navbar.Text>
+              <Navbar.Text className="me-3 navLink">Home</Navbar.Text>
             </LinkContainer>
-            <NavDropdown title="All Books" id="navbarScrollingDropdown" className="me-3">
+            <NavDropdown
+              title="All Books"
+              id="navbarScrollingDropdown"
+              className="me-3"
+            >
               <LinkContainer to="/buy">
                 <NavDropdown.Item href="#action3">Buy</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to="/exchange">
+              <LinkContainer to="/exchangePage">
                 <NavDropdown.Item href="#action4">Exchange</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>
 
             <LinkContainer to="/blog">
-              <Navbar.Text className="me-3">Blog</Navbar.Text>
+              <Navbar.Text className="me-3 navLink">Blog</Navbar.Text>
             </LinkContainer>
 
-            <LinkContainer to="/blog/create-post">
-              <Navbar.Text className="me-3">Write</Navbar.Text>
-            </LinkContainer>
+            {isAuthenticated ? (
+              <LinkContainer to="/blog/create-post">
+                <Navbar.Text className="me-3 navLink">Write</Navbar.Text>
+              </LinkContainer>
+            ) : (
+              <></>
+            )}
 
             <LinkContainer to="/contact">
-              <Navbar.Text className="me-3">Contact</Navbar.Text>
+              <Navbar.Text className="me-3 navLink">Contact</Navbar.Text>
             </LinkContainer>
           </Nav>
 
@@ -112,7 +120,7 @@ function Appbar() {
                   </Badge>
                 </OverlayTrigger>
                 <LinkContainer to="/profile">
-                  <Button variant="outline-dark" className="">
+                  <Button variant="outline-dark" className="navLink">
                     Profile
                   </Button>
                 </LinkContainer>
@@ -127,7 +135,7 @@ function Appbar() {
             ) : (
               <>
                 <LinkContainer to="/login">
-                  <Navbar.Text>Login</Navbar.Text>
+                  <Navbar.Text className="navLink">Login</Navbar.Text>
                 </LinkContainer>
               </>
             )}
@@ -139,4 +147,3 @@ function Appbar() {
 }
 export default Appbar;
 
-// Added comment

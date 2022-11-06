@@ -80,3 +80,6 @@
     margin-top: 10px;
     align-self: flex-end;
 }
+.singlePostEdit .updateIcons {
+    cursor: pointer;
+}
