@@ -25,10 +25,25 @@ import AddPost from "./components/AddPost";
 import AddBuyBook from "./components/AddBuyBook";
 import BuyBookDetails from "./components/BuyBookDetails";
 import Confirm from "./components/Confirm";
-
+import socket from "./utils/Socket";
 
 function App() {
   const queryClient = useQueryClient();
+  useEffect(() => {
+    socket.connect();
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log(socket.connected);
+    });
+
+    return () => {
+      socket.off("connect");
+    };
+  }, []);
   useEffect(() => {
     queryClient.invalidateQueries(["current-user", 1]);
   }, []);
@@ -51,15 +66,11 @@ function App() {
           <Route path="/book/:bookId" element={<BookDetails />} />
           <Route path="/book/buy/:bookId" element={<BuyBookDetails />} />
 
-
           <Route path="/search" element={<SearchResult />} />
-          <Route path="blog/:postId" element={<PostDetailsPage/>}/>
-          <Route path="blog/create-post" element={<AddPost/>}/>
-          <Route path="/add-buy-book" element={<AddBuyBook/>}/>
-          <Route path="/confirm/:bookId" element={<Confirm/>}/>
-        
-
-
+          <Route path="blog/:postId" element={<PostDetailsPage />} />
+          <Route path="blog/create-post" element={<AddPost />} />
+          <Route path="/add-buy-book" element={<AddBuyBook />} />
+          <Route path="/confirm/:bookId" element={<Confirm />} />
         </Routes>
         <Footer />
       </BrowserRouter>
