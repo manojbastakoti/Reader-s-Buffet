@@ -36,6 +36,7 @@ import BookList from "./components/admin/BookList";
 import FeedbackList from "./components/admin/FeedbackList";
 import { Outlet } from "react-router-dom";
 import Layout from "./components/Layout";
+import Receipt from "./components/Receipt";
 
 function App() {
   const queryClient = useQueryClient();
@@ -63,6 +64,7 @@ function App() {
             <Route path="blog/:postId" element={<PostDetailsPage />} />
             <Route path="blog/create-post" element={<AddPost />} />
             <Route path="/add-buy-book" element={<AddBuyBook />} />
+
             <Route
               path="/confirm/:bookId"
               element={
@@ -77,6 +79,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/verification" element={<Verification />} />
           <Route path="/password-reset" element={<PasswordReset />} />
+          <Route path="/receipt" element={<Receipt />} />
+
 
           {/* Admin Routes */}
           <Route

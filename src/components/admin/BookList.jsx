@@ -14,10 +14,14 @@ export default function BookList() {
   useEffect(() => {
     const fetchBooks = async () => {
       const res = await axios.get("/book/buy/all" + search);
-      setBooks(res.data);
+      setBooks(res.data.data.buybooks);
     };
     fetchBooks();
   }, [search]);
+
+  // const books = data?.data?.data?.buybooks;
+  console.log(books)
+
 
   const columns = [
     { field: "_id", headerName: "ID", width: 250 },

@@ -52,6 +52,8 @@ const schema = Yup.object().shape({
 });
 
 export default function Confirm() {
+  const navigate = useNavigate();
+
   const query = useRouteQuery();
   let { bookId } = useParams();
   if (!bookId) {
@@ -91,6 +93,7 @@ export default function Confirm() {
         let data = {
           token: payload.token,
           amount: payload.amount,
+          
         };
 
         axios
@@ -98,10 +101,37 @@ export default function Confirm() {
             `https://meslaforum.herokuapp.com/khalti/${data.token}/${data.amount}/${myKey.secretKey}`
           )
           .then((response) => {
-            console.log(response.data);
+            // console.log(response);
             const name = response.data.data.user.name;
+            const type = response.data.data.type.name;
+            const state = response.data.data.state.name;
+            const product_id = response.data.data.product_identity;
+            const total = response.data.data.amount;
 
-            alert(`Thanks for the purchase ${name}`);
+            // console.log(name)
+            // console.log(type)
+            // console.log(state)
+            // console.log(product_id)
+            // console.log(total)
+
+            // alert(`Thanks for the purchase ${name}`);
+            
+            // navigate(`/receipt`);
+
+            navigate(
+              '/receipt',
+              {
+                state: {
+                  name,
+                  title,
+                  type,
+                  state,
+                  product_id,
+                  total,
+                }
+              }
+            );
+
             
             // Alert(response.data.data.user.name)
           })
@@ -128,14 +158,25 @@ export default function Confirm() {
   };
   let checkout = new KhaltiCheckout(config);
 
-  const navigate = useNavigate();
   const { mutate, isLoading } = useMutation(
     async (values) => axios.post("/order/new", values),
     {
       onSuccess: (data) => {
         if (data.status === 200 || data.status === 201) {
-          toast.success(data.data.message);
-          navigate(`/`);
+          checkout.show({ amount: khaltiPrice })
+          console.log(data)
+          const area = data.data.area;
+          // navigate(
+          //   '/receipt',
+          //   {
+          //     state: {
+                
+          //      area
+          //     }
+          //   }
+          // );
+
+          // toast.success(data.data.message);
         }
       },
       onError: (error) => {
@@ -319,21 +360,24 @@ export default function Confirm() {
                           <Button
                             variant="primary"
                             type="submit"
+                            // onClick={() =>
+                            //   checkout.show({ amount: khaltiPrice })
+                            // }
                             disabled={!isValid || isLoading}
                           >
-                            {isLoading ? "Continuing..." : "Continue"}
+                            {isLoading ? "Continuing..." : "Proceed to payment"}
                           </Button>
                         </div>
 
                         <div className=" m-3">
-                          <Button
+                          {/* <Button
                             variant="warning"
                             onClick={() =>
                               checkout.show({ amount: khaltiPrice })
                             }
                           >
                             Pay via Khalti
-                          </Button>
+                          </Button> */}
                         </div>
                       </Form>
                     </Col>

@@ -8,8 +8,7 @@ export default function BuySection() {
   const { data, isLoading, isError } = useQuery(["all-buyBooks"], async () =>
     axios.get("/book/buy/all")
   );
-
-  const books = data?.data;
+  const books = data?.data?.data?.buybooks;
 
   if (isLoading) return <Loading />;
   if (isError) return <div>Something went wrong!</div>;
