@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "../styles/Login.css";
@@ -13,7 +13,31 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/slices/authSlice";
+import jwt_decode from "jwt-decode";
+
 export default function Login() {
+
+  function handleCallbackResponse(response) {
+    console.log("Encoded JWT ID Token:"+response.credential);
+    var userObject = jwt_decode(response.credential);
+    console.log(userObject);
+  }
+  useEffect(() => {
+
+    /* global google */
+    google.accounts.id.initialize({
+      client_id: "816718441777-4e904ha07j3qg13d5gshngl3136n5t9i.apps.googleusercontent.com",
+      callback: handleCallbackResponse
+
+      
+    });
+    
+    google.accounts.id.renderButton(
+      document.getElementById("buttonDiv"),
+      { theme: "filled_blue", size: "large", shape: "rectangular", text: "continue_with", logo_alignment: "left"}  // customization attributes
+    );
+
+  }, []);
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -122,9 +146,10 @@ export default function Login() {
             <h5>OR</h5>
 
             <div className="d-grid m-3">
-              <Button variant="primary">
+            <div id="buttonDiv"></div>
+              {/* <Button variant="primary">
                 <Icon.Google size={20} /> Continue with google
-              </Button>{" "}
+              </Button>{" "} */}
             </div>
             <hr />
 

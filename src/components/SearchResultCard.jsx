@@ -33,7 +33,7 @@ export default function SearchResultCard({ book }) {
           {book.genre.map((genre) => (
             <Badge key={genre._id}>{genre.name}</Badge>
           ))}
-          <p className="text-muted mb-0">Owned by {book.owner.fullName}</p>
+          {/* <p className="text-muted mb-0">Owned by {book.owner.fullName}</p> */}
           <StarRatingComponent
             name="rate1"
             starCount={5}
@@ -42,7 +42,7 @@ export default function SearchResultCard({ book }) {
             // onStarClick={this.onStarClick.bind(this)}
           />
           <div className="d-flex justify-content-end flex-grow-1 align-items-end">
-            <LinkContainer to={`/book/${book._id}`}>
+            <LinkContainer to={`/book/buy/${book._id}`}>
               <Button>View</Button>
             </LinkContainer>
           </div>

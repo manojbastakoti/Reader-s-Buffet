@@ -5,7 +5,7 @@ import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { setUser } from "../redux/slices/authSlice";
-import ProductCard from "./Card";
+import ProductCard from "./ExchangeCard";
 import { fetchCurrentUser } from "../utils/fetchCurrentUser";
 import Loading from "./Loading";
 

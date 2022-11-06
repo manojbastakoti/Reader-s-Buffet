@@ -13,8 +13,8 @@ export default function MyCarousel() {
             alt="First slide"
           />
           <Carousel.Caption>
-            <h1>First slide label</h1>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            <h1>"A good bookshop is not just about selling books from shelves, but reaching out into the world and making a difference."</h1>
+            <p>~David Almond</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -25,8 +25,8 @@ export default function MyCarousel() {
           />
 
           <Carousel.Caption>
-            <h1>Second slide label</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <h1>“You can never get a cup of tea large enough or a book long enough to suit me.” </h1>
+            <p>~C.S. Lewis</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -37,9 +37,9 @@ export default function MyCarousel() {
           />
 
           <Carousel.Caption>
-            <h1>Third slide label</h1>
+            <h1>If there is a book that you want to read, but it hasn’t been written yet, you must be the one to write it.</h1>
             <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+              ~Toni Morrison
             </p>
           </Carousel.Caption>
         </Carousel.Item>

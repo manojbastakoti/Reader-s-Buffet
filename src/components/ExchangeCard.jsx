@@ -1,4 +1,4 @@
-// import "../styles/Card.css";
+import "../styles/Card.css";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -7,12 +7,12 @@ import { LinkContainer } from "react-router-bootstrap";
 import styles from "../styles/ExchangeCard.module.css";
 import ExchangeDialog from "./ExchangeDIalog";
 
-function ExchangeCard({ book: { _id, title, price, cover } }) {
-  const [rating, setRating] = useState(0);
+function ExchangeCard({ book: { _id, title, price, cover, rating } }) {
+  // const [rating, setRating] = useState(0);
 
-  const handleClick = (rate) => {
-    setRating(rate);
-  };
+  // const handleClick = (rate) => {
+  //   setRating(rate);
+  // };
   return (
     <>
       <LinkContainer to={`/book/${_id}`}>
@@ -45,7 +45,7 @@ function ExchangeCard({ book: { _id, title, price, cover } }) {
                 <StarRatingComponent
                   name="rate1"
                   starCount={5}
-                  value={3}
+                  value={rating || 0}
                   editing={false}
                   // onStarClick={this.onStarClick.bind(this)}
                 />

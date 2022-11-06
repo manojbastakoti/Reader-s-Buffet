@@ -36,6 +36,10 @@ export default function Exchange() {
   const handleExchange = () => {
     mutate(bookId);
   };
+
+  const handleCancel = () => {
+    navigate("/")
+  };
   return (
     <Container className="w-50 border   my-4 p-3">
       <h2 className="text-center">Exchange</h2>
@@ -50,7 +54,7 @@ export default function Exchange() {
         <BookDetails viewOnly />
       </div>
       <div className="border p-3 d-flex justify-content-end gap-3">
-        <Button variant="danger">Cancel</Button>
+        <Button onClick={handleCancel} variant="danger">Cancel</Button>
         <Button onClick={handleExchange}>Confirm Exchange</Button>
       </div>
     </Container>

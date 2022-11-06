@@ -1,0 +1,62 @@
+.writePost {
+    padding-top: 50px;
+}
+
+.coverImg {
+    margin-left: 10%;    
+}
+
+.writePost .coverImg img {
+    height:300px;
+    width: 70vw;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.fileUploadIcon {
+    cursor: pointer;
+    border: 2px solid grey;
+    border-radius: 50%;
+    margin-right: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.writePostForm {
+    color: white;
+}
+
+.writeFormGroup {
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+    align-items: center;
+}
+
+/* .form-control {
+    font-size: 30px;
+    border: none;
+    padding: 20px;
+} */
+
+.writeFormGroup .writeInput{
+    font-size: 30px;
+    /* border: none; */
+    margin-bottom: 10px;
+    padding: 30px;
+    width: 70vw;
+    border-radius: 10px;
+}
+
+.writeFormGroup .writeInput:focus {
+    outline: none;
+}
+
+.writeFormGroup .writeText {
+    font-size: 20px;
+}
+
+.postSubmitBtn {
+    margin-left: 10%;
+}
