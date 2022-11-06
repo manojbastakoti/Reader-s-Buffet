@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 import StarRatingComponent from "react-star-rating-component";
 import { useState } from "react";
 export default function BookDetails(props) {
+  const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
   const [ratingModal, setRatingModal] = useState(false);
   const query = useRouteQuery();
   let { bookId } = useParams();
@@ -33,6 +34,27 @@ export default function BookDetails(props) {
     async () => axios.get("/book/" + bookId),
     {
       enabled: !!bookId,
+      onSuccess: (data) => {
+        if (data.status === 200) {
+          console.log(data.data);
+          setIsAddedToWishlist(data?.data?.data.isWishlistedByMe);
+        }
+      },
+    }
+  );
+
+  const wishListMutation = useMutation(
+    async (id) => axios.post("/book/add-to-wishlist", { bookId: id }),
+    {
+      onSuccess: (data) => {
+        if (data.status === 200) {
+          queryClient.invalidateQueries(bookId);
+          toast.success(data.data.message);
+        }
+      },
+      onError: (error) => {
+        toast.error(error?.response?.data?.message || "Something went wrong!");
+      },
     }
   );
 
@@ -50,6 +72,11 @@ export default function BookDetails(props) {
       },
     }
   );
+
+  const addToWishlist = () => {
+    // setIsAddedToWishlist((prev) => !prev);
+    wishListMutation.mutate(bookId);
+  };
 
   const book = data?.data?.data;
 
@@ -78,9 +105,15 @@ export default function BookDetails(props) {
                 <h2>{book?.title} </h2>
               </Col>
               <Col className="d-flex gap-2 justify-content-end">
-                <Button variant="bg-none shadow-none wishlistButton ">
-                  <Icon.Heart />
-                  {/* <Icon.HeartFill /> */}
+                <Button
+                  variant="bg-none shadow-none wishlistButton "
+                  onClick={addToWishlist}
+                >
+                  {isAddedToWishlist ? (
+                    <Icon.HeartFill className="text-danger" />
+                  ) : (
+                    <Icon.Heart className="text-danger" />
+                  )}
                   <br />
                   Wishlist
                 </Button>
@@ -90,18 +123,25 @@ export default function BookDetails(props) {
             <h4>Rs. {book?.price}</h4>
             <p>Published on {book?.publishedDate}</p>
             {book?.genre?.map((g) => (
-              <Badge key={g._id}>{g.name}</Badge>
+              <p>
+                Genre:
+                <b>
+                  <i className="genre">{g.name}</i>
+                </b>
+              </p>
+              // <Badge key={g._id}>{g.name}</Badge>
             ))}
 
             <p className="text-muted">
               Owned by <b>{book?.owner.fullName}</b>
             </p>
             <p>{book?.description}</p>
+            <hr />
 
             {!props.viewOnly && (
               <>
                 <div>
-                  <h5 className="text-muted">Rating</h5>
+                  <h5 className="text-muted">Rating ({book?.ratingsCount})</h5>
                   <p
                     className="d-flex align-items-center gap-2 mb-0"
                     style={{ fontSize: "20px" }}
@@ -113,23 +153,31 @@ export default function BookDetails(props) {
                       <StarRatingComponent
                         name="rate1"
                         starCount={5}
-                        value={3.9}
+                        value={book?.rating || 0}
                         editing={false}
                         // onStarClick={this.onStarClick.bind(this)}
                       />{" "}
                     </span>
-                    3.9
+                    {book?.rating}
                   </p>
-                  <span
-                    role="button"
-                    className="text-info "
-                    variant="none"
-                    onClick={() => setRatingModal(true)}
-                  >
-                    Rate this book
-                  </span>
+                  {!!book?.myRating && (
+                    <p className="text-muted">
+                      You rated {book?.myRating} stars.
+                    </p>
+                  )}
+                  {!book.isOwnedByMe && (
+                    <span
+                      role="button"
+                      className="text-info "
+                      variant="none"
+                      onClick={() => setRatingModal(true)}
+                    >
+                      Rate this book
+                    </span>
+                  )}
                 </div>
                 <br />
+                <hr />
                 <p className="d-flex gap-2">
                   {!book?.isMine && (
                     <>
@@ -142,10 +190,10 @@ export default function BookDetails(props) {
                         </Button>
                       ) : (
                         <LinkContainer to={`/exchange?bookId=${book?._id}`}>
-                          <Button>Get</Button>
+                          <Button variant="outline-primary">Get</Button>
                         </LinkContainer>
                       )}
-                      <Button variant="outline-success">Buy</Button>
+                      {/* <Button variant="outline-success">Buy</Button> */}
                     </>
                   )}
                 </p>
@@ -154,15 +202,45 @@ export default function BookDetails(props) {
           </Col>
         </Row>
       </Container>
-      <RatingModal show={ratingModal} onHide={() => setRatingModal(false)} />
+      {!book.isOwnedByMe && (
+        <RatingModal
+          show={ratingModal}
+          onHide={() => setRatingModal(false)}
+          bookId={bookId}
+          initialRating={book?.myRating}
+        />
+      )}
     </>
   );
 }
 
 const RatingModal = (props) => {
-  const [rating, setRating] = useState(1);
+  const [rating, setRating] = useState(props.initialRating || 1);
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation(
+    async (payload) => axios.post("/book/rate-book", payload),
+    {
+      onSuccess: (data, variables) => {
+        if (data.status === 200) {
+          queryClient.invalidateQueries([props.bookId]);
+          toast.success(`You rated ${variables.rating} stars.`);
+          props.onHide();
+        }
+      },
+      onError: (error) => {
+        toast.error(error?.response?.data?.message || "Something went wrong!");
+      },
+    }
+  );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const payload = { rating, bookId: props.bookId };
+    mutate(payload);
+  };
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Modal
         {...props}
         size="lg"
@@ -197,7 +275,9 @@ const RatingModal = (props) => {
           <Button onClick={props.onHide} variant="danger" type="button">
             Close
           </Button>
-          <Button type="submit">Submit rating</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            Submit rating
+          </Button>
         </Modal.Footer>
       </Modal>
     </form>

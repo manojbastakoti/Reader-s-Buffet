@@ -140,7 +140,7 @@ export default function Register() {
           isSubmitting,
           setSubmitting,
         }) => (
-          <div>
+          <div className="full">
             <Row>
               <Col xs={10} md={8} lg={4} className="register-container ">
                 <div>
@@ -149,7 +149,7 @@ export default function Register() {
 
                 <Form noValidate onSubmit={handleSubmit}>
                   <Form.Group className="m-3" controlId="formBasicName">
-                    <Form.Label>Full Name:</Form.Label>
+                    {/* <Form.Label>Full Name:</Form.Label> */}
                     <Form.Control
                       type="text"
                       placeholder="Enter full name"

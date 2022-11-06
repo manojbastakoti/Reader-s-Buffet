@@ -24,7 +24,7 @@ export default function AddBook() {
   const [showCreateGenre, setShowCreateGenre] = useState(false);
   const initialValues = {
     title: "",
-    price: 0,
+    price: 50,
     author: "",
     genre: "",
     description: "",
@@ -80,7 +80,10 @@ export default function AddBook() {
     >
       {(props) => (
         <Container className="py-3">
-          <Card className="w-50 p-3 mx-auto h-auto">
+          {/* <Card className="w-50 p-3 mx-auto h-auto"> */}
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-md-6">
             <h2 className="text-center"> Add book</h2>
             <hr />
             <FormikForm className="w-100 mx-auto">
@@ -107,10 +110,14 @@ export default function AddBook() {
                     <Form.Control
                       type="number"
                       placeholder="Enter price here"
+                      disabled
                       {...field}
                     />
                   )}
                 </Field>
+                <Form.Text className="text-muted" style={{color:"red"}}>
+                  *The price is fixed for exchange.
+                </Form.Text>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="author">
@@ -184,6 +191,7 @@ export default function AddBook() {
                       type="text"
                       as="textarea"
                       placeholder="Enter description about the book here"
+                      rows={5}
                       {...field}
                     />
                   )}
@@ -196,7 +204,10 @@ export default function AddBook() {
                 Add book
               </Button>
             </FormikForm>
-          </Card>
+          {/* </Card> */}
+          </div>
+          </div>
+          </div>
           <CreateGenreModal show={showCreateGenre} handleClose={handleClose} />
         </Container>
       )}

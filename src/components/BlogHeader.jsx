@@ -1,5 +1,5 @@
 import React from "react";
-import Image from 'react-bootstrap/Image'
+import Image from "react-bootstrap/Image";
 import "../styles/BlogHeader.css";
 
 export default function BlogHeader() {
@@ -10,7 +10,9 @@ export default function BlogHeader() {
           <span className="headerTitleSm">Stories and Posts</span>
           <span className="headerTitleLg">Blog</span>
         </div>
-        <Image className="headerImg" src="./assets/draft2.jpg" alt='Header' fluid/>
+        <div className="headerImg">
+          <Image fluid rounded src="./assets/blog.jpg" alt="Header" />
+        </div>
       </div>
     </>
   );

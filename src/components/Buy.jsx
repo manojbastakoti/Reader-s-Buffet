@@ -1,7 +1,10 @@
 import React from 'react'
+import BuySection from './BuySection'
 
 export default function Buy() {
   return (
-    <div>Buy</div>
+    <div>
+      <BuySection/>
+    </div>
   )
 }

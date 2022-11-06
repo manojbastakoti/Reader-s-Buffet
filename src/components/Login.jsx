@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../redux/slices/authSlice";
 import jwt_decode from "jwt-decode";
 
-export default function Login() {
+export default function Login({noRedirect}) {
 
   function handleCallbackResponse(response) {
     console.log("Encoded JWT ID Token:"+response.credential);
@@ -63,7 +63,9 @@ export default function Login() {
             autoClose: true,
           });
           dispatch(login(data.data.data.token));
+          if (!noRedirect){
           navigate("/");
+          }
         }
       },
       onError: (error) => {
@@ -99,7 +101,7 @@ export default function Login() {
 
   return (
     <>
-      <div>
+      <div className="whole">
         <Row>
           <Col xs={10} md={8} lg={4} className="login-container ">
             <h1>Reader's Buffet</h1>
@@ -113,9 +115,9 @@ export default function Login() {
                   onChange={handleChange}
                   value={credentials.user}
                 />
-                <Form.Control.Feedback type="invalid">
+                {/* <Form.Control.Feedback type="invalid">
                   Please enter your Username or email address
-                </Form.Control.Feedback>
+                </Form.Control.Feedback> */}
               </Form.Group>
 
               <Form.Group className="m-3" controlId="formBasicPassword">
@@ -127,9 +129,9 @@ export default function Login() {
                   onChange={handleChange}
                   value={credentials.password}
                 />
-                <Form.Control.Feedback type="invalid">
+                {/* <Form.Control.Feedback type="invalid">
                   Please enter your password.
-                </Form.Control.Feedback>
+                </Form.Control.Feedback> */}
               </Form.Group>
               <div className="d-grid m-3">
                 <Button variant="primary" type="submit" disabled={isLoading}>

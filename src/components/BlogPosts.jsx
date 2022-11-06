@@ -2,16 +2,13 @@ import React from "react";
 import "../styles/BlogPosts.css";
 import Post from "./Post";
 
-export default function BlogPosts() {
+export default function BlogPosts({ posts }) {
   return (
     <>
       <div className="blogPosts">
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
+        {posts.map((p) => (
+          <Post post={p} />
+        ))}
       </div>
     </>
   );

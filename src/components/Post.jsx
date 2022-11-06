@@ -1,38 +1,42 @@
 import React from "react";
 import Image from "react-bootstrap/Image";
 import "../styles/Post.css";
+import { Link } from "react-router-dom";
+import { Badge } from "react-bootstrap";
 
-export default function Post() {
+export default function Post({ post }) {
   return (
     <>
       <div className="post">
-        <div className="postImg">
-          <Image src="./assets/8.jpg" alt="Posts" fluid />
-        </div>
+        {post.photo && (
+          <div className="postImg">
+            <Image
+              src={process.env.REACT_APP_BASE_API + post.photo}
+              alt="Cover"
+              fluid
+            />
+          </div>
+        )}
 
         <div className="postInfo">
           <div className="postCats">
-            <span className="postCat">Music</span>
-            <span className="postCat">Life</span>
+            <span className="postCat">
+              {post?.category?.map((c) => (
+                <Link className="link-cat" to={`/blog?cat=${c._id}`}>
+                  <p>{c.name}</p>
+                </Link>
+              ))}
+            </span>
           </div>
-          <span className="postTitle">Sample Story Title here</span>
-          <hr />
-          <span className="postDate">1 hour ago</span>
+          <Link className="link" to={`${post._id}`}>
+            <span className="postTitle">{post.title}</span>
+          </Link>
+
+          <span className="postDate">
+            {new Date(post.createdAt).toDateString()}
+          </span>
         </div>
-        <p className="postDesc">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-          reiciendis hic dolorem ipsa sed rerum reprehenderit nostrum quod
-          obcaecati ducimus amet molestias adipisci praesentium vel, id earum
-          autem. Vel, cupiditate.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-          reiciendis hic dolorem ipsa sed rerum reprehenderit nostrum quod
-          obcaecati ducimus amet molestias adipisci praesentium vel, id earum
-          autem. Vel, cupiditate.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-          reiciendis hic dolorem ipsa sed rerum reprehenderit nostrum quod
-          obcaecati ducimus amet molestias adipisci praesentium vel, id earum
-          autem. Vel, cupiditate.
-        </p>
+        <p className="postDesc">{post.description}</p>
       </div>
     </>
   );
