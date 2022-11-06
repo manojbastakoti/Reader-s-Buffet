@@ -25,6 +25,7 @@ import AddPost from "./components/AddPost";
 import AddBuyBook from "./components/AddBuyBook";
 import BuyBookDetails from "./components/BuyBookDetails";
 import Confirm from "./components/Confirm";
+
 import ExchangeSection from "./components/ExchangeSection";
 import Admin from "./components/admin/Admin";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -38,8 +39,26 @@ import { Outlet } from "react-router-dom";
 import Layout from "./components/Layout";
 import Receipt from "./components/Receipt";
 
+import socket from "./utils/Socket";
+
+
 function App() {
   const queryClient = useQueryClient();
+  useEffect(() => {
+    socket.connect();
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log(socket.connected);
+    });
+
+    return () => {
+      socket.off("connect");
+    };
+  }, []);
   useEffect(() => {
     queryClient.invalidateQueries(["current-user", 1]);
   }, []);
@@ -79,6 +98,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/verification" element={<Verification />} />
           <Route path="/password-reset" element={<PasswordReset />} />
+
           <Route path="/receipt" element={<Receipt />} />
 
 
@@ -97,6 +117,17 @@ function App() {
             <Route path="/admin/feedbacks" element={<FeedbackList />} />
             <Route path="/admin" element={<Home />} />
           </Route>
+
+          <Route path="/add-book" element={<AddBook />} />
+          <Route path="/book/:bookId" element={<BookDetails />} />
+          <Route path="/book/buy/:bookId" element={<BuyBookDetails />} />
+
+          <Route path="/search" element={<SearchResult />} />
+          <Route path="blog/:postId" element={<PostDetailsPage />} />
+          <Route path="blog/create-post" element={<AddPost />} />
+          <Route path="/add-buy-book" element={<AddBuyBook />} />
+          <Route path="/confirm/:bookId" element={<Confirm />} />
+
         </Routes>
         {/* <Footer /> */}
       </BrowserRouter>
